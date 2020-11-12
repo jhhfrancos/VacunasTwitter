@@ -1,0 +1,39 @@
+﻿using ProyectoTesisBussiness.ML;
+using ProyectoTesisDataAccess.Context;
+using ProyectoTesisDataAccess.Repository;
+using ProyectoTesisModels.Modelos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ProyectoTesisBussiness.BussinessControllers
+{
+    public class TweetsProfilesBussiness
+    {
+        private TwitterProfilesRepository twitterProfilesRepository;
+        MachinneLearnning machinneLearnning;
+        public TweetsProfilesBussiness()
+        {
+            twitterProfilesRepository = new TwitterProfilesRepository();
+            machinneLearnning = new MachinneLearnning();
+        }
+
+        public Tweet GetFirstTweet()
+        {
+            return twitterProfilesRepository.GetFirstTweet(); ;
+        }
+        public List<Tweet> GetTweets(int limit)
+        {
+            return twitterProfilesRepository.GetAllTweets(limit);
+        }
+
+        public List<Dictionary<string,string>> LDATweets()
+        {
+            var train = GetTweets(2000).Select(t => t.text).ToList();
+            machinneLearnning.LDA(train);
+            return null;
+        }
+        
+    }
+}

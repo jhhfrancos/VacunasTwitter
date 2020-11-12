@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-fetch-data',
@@ -8,8 +8,15 @@ import { HttpClient } from '@angular/common/http';
 export class FetchDataComponent {
   public forecasts: String[];
 
+  /*constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    http.get<String[]>(baseUrl + 'WeatherForecast/api/getFirst').subscribe(result => {
+      this.forecasts = result;
+    }, error => console.error(error));
+  }*/
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<String[]>(baseUrl + 'weatherforecast').subscribe(result => {
+    let params = new HttpParams();
+    params = params.append('limit', "10");
+    http.get<String[]>(baseUrl + 'DataSet/api/getAll', {params}).subscribe(result => {
       this.forecasts = result;
     }, error => console.error(error));
   }

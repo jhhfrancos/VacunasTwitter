@@ -22,7 +22,7 @@ namespace ProyectoTesisModels.Modelos
         public string source { get; set; }
         public bool isTruncated { get; set; }
         public Int64 inReplyToStatusId { get; set; }
-        public int inReplyToUserId { get; set; }
+        public Int64 inReplyToUserId { get; set; }
         public bool isFavorited { get; set; }
         public bool isRetweeted { get; set; }
         public int favoriteCount { get; set; }

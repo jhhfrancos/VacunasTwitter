@@ -33,8 +33,8 @@ namespace ProyectoTesis.Controllers
             bussiness = new TweetsProfilesBussiness();
         }
 
+        [Route("api/getFirst")]
         [HttpGet]
-        
         public IEnumerable<string> Get()
         {
             var tweet = bussiness.GetFirstTweet();

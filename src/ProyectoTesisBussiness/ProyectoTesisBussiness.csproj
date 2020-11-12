@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProyectoLDA\ProyectoLDA.csproj" />
     <ProjectReference Include="..\ProyectoTesisDataAccess\ProyectoTesisDataAccess.csproj" />
     <ProjectReference Include="..\ProyectoTesisModels\ProyectoTesisModels.csproj" />
   </ItemGroup>

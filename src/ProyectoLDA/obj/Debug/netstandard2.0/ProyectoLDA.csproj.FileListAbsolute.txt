@@ -1,0 +1,9 @@
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\bin\Debug\netstandard2.0\ProyectoLDA.deps.json
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\bin\Debug\netstandard2.0\ProyectoLDA.dll
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\obj\Debug\netstandard2.0\ProyectoLDA.AssemblyInfoInputs.cache
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\obj\Debug\netstandard2.0\ProyectoLDA.AssemblyInfo.cs
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\obj\Debug\netstandard2.0\ProyectoLDA.csprojAssemblyReference.cache
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\bin\Debug\netstandard2.0\ProyectoLDA.pdb
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\obj\Debug\netstandard2.0\ProyectoLDA.csproj.CoreCompileInputs.cache
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\obj\Debug\netstandard2.0\ProyectoLDA.dll
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoLDA\obj\Debug\netstandard2.0\ProyectoLDA.pdb
