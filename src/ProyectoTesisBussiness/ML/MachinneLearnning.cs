@@ -1,6 +1,7 @@
 ﻿using ProyectoLDA;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ProyectoTesisBussiness.ML
@@ -9,10 +10,16 @@ namespace ProyectoTesisBussiness.ML
     {
         MainClassLDA LDAClass = new MainClassLDA();
 
-        public List<Dictionary<string,string>> LDA(List<string> trainSet)
+        public (List<string>, List<string>) LDAAsync(List<string> trainSet)
         {
-            LDAClass.Entrenamiento(trainSet);
-            return null;
+            var result = LDAClass.Entrenamiento(trainSet).Result;
+            return result;
+        }
+
+        public string[] Tokens(string texto)
+        {
+            var listTokens = LDAClass.Tokens(texto);
+            return listTokens?.Select(t => t.ToString())?.ToArray();
         }
     }
 }

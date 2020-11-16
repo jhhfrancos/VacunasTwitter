@@ -28,11 +28,20 @@ namespace ProyectoTesisBussiness.BussinessControllers
             return twitterProfilesRepository.GetAllTweets(limit);
         }
 
-        public List<Dictionary<string,string>> LDATweets()
+        public IEnumerable<TableTopics> LDATweets()
         {
             var train = GetTweets(2000).Select(t => t.text).ToList();
-            machinneLearnning.LDA(train);
-            return null;
+            var result = machinneLearnning.LDAAsync(train);
+            
+            List<TableTopics> returnValue = new List<TableTopics>();
+            int index = 0;
+            foreach (var item in result.Item1)
+            {
+                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), machinneLearnning.Tokens(item));
+                returnValue.Add(dictionary);
+                index++;
+            }
+            return returnValue;
         }
         
     }

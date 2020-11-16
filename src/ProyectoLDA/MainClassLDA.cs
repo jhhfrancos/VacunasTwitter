@@ -13,10 +13,21 @@ namespace ProyectoLDA
 {
     public class MainClassLDA
     {
-        public async void Entrenamiento(List<string> stringArray)
+        public MainClassLDA()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            ApplicationLogging.SetLoggerFactory(LoggerFactory.Create(lb => lb.AddConsole()));
+            //ApplicationLogging.SetLoggerFactory(LoggerFactory.Create(lb => lb.AddConsole()));
+        }
+
+        public IEnumerable<IToken> Tokens(string texto)
+        {
+            FastTokenizer fastTokenizer = new FastTokenizer(Language.Spanish);
+            return fastTokenizer.Parse(texto);
+        }
+
+        public async Task<(List<string>,List<string>)> Entrenamiento(List<string> stringArray)
+        {
+            
 
             //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
             Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-viajes"));
@@ -33,10 +44,10 @@ namespace ProyectoLDA
 
             ///////////-------------
             List<IDocument> testing = new List<IDocument>();
-            testing.Add(new Document("Me gusta esta de viaje entre carreteras y amigos", Language.Spanish));
-            testing.Add(new Document("Salir de vaciones", Language.Spanish));
-            testing.Add(new Document("ciudad allá voy", Language.Spanish));
-            testing.Add(new Document("todas las fotografias del mundo junto a la gente que amo", Language.Spanish));
+            testing.Add(new Document("Empiezan a sonar mucho las vacunas para #SARSCoV2. Compensa dejar claro que las primeras que se usen habrán demostrado dos", Language.Spanish));
+            testing.Add(new Document("Avanza la jornada departamental de vacunación. Las niñas ente 9 y 17 años recibirán la vacuna contra el VPH. Comunícate con tu Empresa Aseguradora de Planes de Beneficio y pide una cita, o el 29 de agosto acércate a la IPS vacunadora más cercana a tu casa", Language.Spanish));
+            testing.Add(new Document("Otro mito. Las vacunas son inseguras. FALSO Las vacunas pasan por una serie de análisis muy rígidos, que evalúan, primero", Language.Spanish));
+            testing.Add(new Document("Empiezan a sonar mucho las vacunas para #SARSCoV2. Compensa dejar claro que las primeras que se usen habrán demostrado dos", Language.Spanish));
 
             IDocument[] test = testing.ToArray();
             //var (train, test) = await Corpus.Reuters.GetAsync();
@@ -58,6 +69,8 @@ namespace ProyectoLDA
                 await lda.StoreAsync();
             }
 
+            List<string> values = new List<string>();
+            List<string> topicos = new List<string>();
             using (var lda = await LDA.FromStoreAsync(Language.Spanish, 0, "viajes-lda"))
             {
                 foreach (var doc in testDocs)
@@ -71,9 +84,12 @@ namespace ProyectoLDA
                         Console.WriteLine("------------------------------------------");
                         Console.WriteLine(docTopics);
                         Console.WriteLine("------------------------------------------\n\n");
+                        values.Add(doc.Value);
+                        topicos.Add(docTopics);
                     }
                 }
             }
+            return (values,topicos);
         }
     }
 }

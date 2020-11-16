@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProyectoTesisBussiness.BussinessControllers;
+using ProyectoTesisModels.Modelos;
 
 namespace ProyectoTesis.Controllers
 {
@@ -24,11 +25,12 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/getAll")]
         [HttpGet]
-        public IEnumerable<string> GetAll(int limit)
+        public IEnumerable<TableTopics> GetAll(int limit)
         {
             var tweet = bussiness.GetTweets(limit);
-            bussiness.LDATweets();
-            return tweet.Select(i => i.ToString()); ;
+            var result = bussiness.LDATweets();
+            
+            return result;
         }
     }
 }
