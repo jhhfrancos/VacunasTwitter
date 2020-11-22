@@ -4,14 +4,14 @@
     "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisBussiness\\ProyectoTesisBussiness.csproj": {}
   },
   "projects": {
-    "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj": {
+    "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj",
-        "projectName": "ProyectoLDA",
-        "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj",
+        "projectUniqueName": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj",
+        "projectName": "ProyectoIA",
+        "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj",
         "packagesPath": "C:\\Users\\Jhh\\.nuget\\packages\\",
-        "outputPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\obj\\",
+        "outputPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -44,7 +44,7 @@
           "dependencies": {
             "Catalyst": {
               "target": "Package",
-              "version": "[0.0.13658, )"
+              "version": "[0.0.13839, )"
             },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
@@ -102,8 +102,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj": {
-                "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj"
+              "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {
+                "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj"
               },
               "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisDataAccess\\ProyectoTesisDataAccess.csproj": {
                 "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisDataAccess\\ProyectoTesisDataAccess.csproj"

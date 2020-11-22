@@ -25,6 +25,6 @@ D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussine
 D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\obj\Debug\netstandard2.0\ProyectoTesisBussiness.csproj.CopyComplete
 D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\obj\Debug\netstandard2.0\ProyectoTesisBussiness.dll
 D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\obj\Debug\netstandard2.0\ProyectoTesisBussiness.pdb
-D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\bin\Debug\netstandard2.0\ProyectoLDA.dll
-D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\bin\Debug\netstandard2.0\ProyectoLDA.pdb
 D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\obj\Debug\netstandard2.0\ProyectoTesisBussiness.csproj.CoreCompileInputs.cache
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\bin\Debug\netstandard2.0\ProyectoIA.dll
+D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesisBussiness\bin\Debug\netstandard2.0\ProyectoIA.pdb

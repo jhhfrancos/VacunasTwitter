@@ -2,14 +2,14 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "Catalyst/0.0.13658": {
+      "Catalyst/0.0.13839": {
         "type": "package",
         "dependencies": {
           "HtmlAgilityPack": "1.11.28",
           "MessagePack": "2.2.60",
           "Microsoft.ML": "1.5.2",
           "Microsoft.Recognizers.Text.DateTime": "1.4.2",
-          "Mosaik.Core": "0.0.9787",
+          "Mosaik.Core": "0.0.13791",
           "System.Memory": "4.5.4",
           "System.Numerics.Vectors": "4.5.0",
           "System.Runtime.Serialization.Primitives": "4.3.0",
@@ -543,7 +543,7 @@
           "build/_._": {}
         }
       },
-      "Mosaik.Core/0.0.9787": {
+      "Mosaik.Core/0.0.13791": {
         "type": "package",
         "dependencies": {
           "MessagePack": "2.0.323",
@@ -1023,19 +1023,19 @@
           "lib/netstandard2.0/_._": {}
         }
       },
-      "ProyectoLDA/1.0.0": {
+      "ProyectoIA/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Catalyst": "0.0.13658",
+          "Catalyst": "0.0.13839",
           "Microsoft.Extensions.Logging": "5.0.0",
           "Microsoft.Extensions.Logging.Console": "5.0.0"
         },
         "compile": {
-          "bin/placeholder/ProyectoLDA.dll": {}
+          "bin/placeholder/ProyectoIA.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ProyectoLDA.dll": {}
+          "bin/placeholder/ProyectoIA.dll": {}
         }
       },
       "ProyectoTesisDataAccess/1.0.0": {
@@ -1068,15 +1068,15 @@
     }
   },
   "libraries": {
-    "Catalyst/0.0.13658": {
-      "sha512": "hLMcMY2sMuVzuJmuKDuvt2qZ4IgBhlwrozPgJExrAPhA93zls5zzA3eDWmylJm+Qx6H52tR+9ZFxR4Fmb9+qqw==",
+    "Catalyst/0.0.13839": {
+      "sha512": "gxwkd81HzwcbbGan3Yyb1JNMrD6AiHESOIdOFwL7X3Z8i884uftkyM3EkPVPzqCr3YuzSCGoD5/luwSNgTzoXw==",
       "type": "package",
-      "path": "catalyst/0.0.13658",
+      "path": "catalyst/0.0.13839",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "catalyst-logo.png",
-        "catalyst.0.0.13658.nupkg.sha512",
+        "catalyst.0.0.13839.nupkg.sha512",
         "catalyst.nuspec",
         "lib/net5.0/Catalyst.dll",
         "lib/netcoreapp3.0/Catalyst.dll",
@@ -1818,17 +1818,17 @@
         "x64/native/windows/mongocrypt.dll"
       ]
     },
-    "Mosaik.Core/0.0.9787": {
-      "sha512": "xwQ0gr7w9KXz6Cc9eyLUkGj4ekybuawWO5jMc1A4u0l5AXcjseM8M+gsGLmSQptbrIWQ5ZOqGImyNrWj0vUEtw==",
+    "Mosaik.Core/0.0.13791": {
+      "sha512": "w9ry8WSppyssXRZd7yoLmbfO5pgoB8J+ZDa1hfa5iHECIooTkn2x5jXpNPKSD3M4q6aQb//DvY8gzSqY8S6ZMg==",
       "type": "package",
-      "path": "mosaik.core/0.0.9787",
+      "path": "mosaik.core/0.0.13791",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netcoreapp3.0/Mosaik.Core.dll",
         "lib/netcoreapp3.1/Mosaik.Core.dll",
         "lib/netstandard2.0/Mosaik.Core.dll",
-        "mosaik.core.0.0.9787.nupkg.sha512",
+        "mosaik.core.0.0.13791.nupkg.sha512",
         "mosaik.core.nuspec"
       ]
     },
@@ -3420,10 +3420,10 @@
         "version.txt"
       ]
     },
-    "ProyectoLDA/1.0.0": {
+    "ProyectoIA/1.0.0": {
       "type": "project",
-      "path": "../ProyectoLDA/ProyectoLDA.csproj",
-      "msbuildProject": "../ProyectoLDA/ProyectoLDA.csproj"
+      "path": "../ProyectoIA/ProyectoIA.csproj",
+      "msbuildProject": "../ProyectoIA/ProyectoIA.csproj"
     },
     "ProyectoTesisDataAccess/1.0.0": {
       "type": "project",
@@ -3439,7 +3439,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "NETStandard.Library >= 2.0.3",
-      "ProyectoLDA >= 1.0.0",
+      "ProyectoIA >= 1.0.0",
       "ProyectoTesisDataAccess >= 1.0.0",
       "ProyectoTesisModels >= 1.0.0",
       "System.Collections >= 4.3.0"
@@ -3476,8 +3476,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj": {
-              "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoLDA\\ProyectoLDA.csproj"
+            "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {
+              "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj"
             },
             "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisDataAccess\\ProyectoTesisDataAccess.csproj": {
               "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisDataAccess\\ProyectoTesisDataAccess.csproj"

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "T2QqhJXLPF6VGZWwNWjzSB8CDvVJd+oZsADNTs3YIWmChbyCkJ8WRhLnpubOyAiykNejPkFcBw3Zp+HVb1ndog==",
+  "dgSpecHash": "Kj3Nt5PfQVKnNFBl8DKz5xtmpQQ0GGj+ijzQ5oAFOv2Ufjt77U9r/y9P6av8QjXBRSnJaIJJgdar6bkCiLr3ww==",
   "success": true,
   "projectFilePath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisBussiness\\ProyectoTesisBussiness.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Jhh\\.nuget\\packages\\catalyst\\0.0.13658\\catalyst.0.0.13658.nupkg.sha512",
+    "C:\\Users\\Jhh\\.nuget\\packages\\catalyst\\0.0.13839\\catalyst.0.0.13839.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\dnsclient\\1.3.1\\dnsclient.1.3.1.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\htmlagilitypack\\1.11.28\\htmlagilitypack.1.11.28.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\messagepack\\2.2.60\\messagepack.2.2.60.nupkg.sha512",
@@ -39,7 +39,7 @@
     "C:\\Users\\Jhh\\.nuget\\packages\\mongodb.driver\\2.11.4\\mongodb.driver.2.11.4.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\mongodb.driver.core\\2.11.4\\mongodb.driver.core.2.11.4.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\mongodb.libmongocrypt\\1.0.0\\mongodb.libmongocrypt.1.0.0.nupkg.sha512",
-    "C:\\Users\\Jhh\\.nuget\\packages\\mosaik.core\\0.0.9787\\mosaik.core.0.0.9787.nupkg.sha512",
+    "C:\\Users\\Jhh\\.nuget\\packages\\mosaik.core\\0.0.13791\\mosaik.core.0.0.13791.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\Jhh\\.nuget\\packages\\nito.asyncex\\5.0.0\\nito.asyncex.5.0.0.nupkg.sha512",

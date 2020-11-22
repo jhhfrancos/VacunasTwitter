@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProyectoLDA\ProyectoLDA.csproj" />
+    <ProjectReference Include="..\ProyectoIA\ProyectoIA.csproj" />
     <ProjectReference Include="..\ProyectoTesisDataAccess\ProyectoTesisDataAccess.csproj" />
     <ProjectReference Include="..\ProyectoTesisModels\ProyectoTesisModels.csproj" />
   </ItemGroup>
