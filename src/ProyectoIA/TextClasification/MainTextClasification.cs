@@ -29,24 +29,24 @@ namespace ProyectoIA.TextClasification
 
 
             //Download the Reuters corpus if necessary
-            var (train, test) = await Corpus.Reuters.GetAsync();
+            //var (train, test) = await Corpus.Reuters.GetAsync();
 
-            /*List<IDocument> training = new List<IDocument>();
+            List<IDocument> training = new List<IDocument>();
             foreach (var item in stringArray)
             {
-                training.Add(new Document(item, Language.Spanish));
+                training.Add(new Document(item, Language.English));
             }
 
-            IDocument[] train = training.ToArray();*/
+            IDocument[] train = training.ToArray();
 
             //Parse the documents using the English pipeline, as the text data is untokenized so far
-            var nlp = Pipeline.For(Language.Spanish);
+            var nlp = Pipeline.For(Language.English);
 
             var trainDocs = nlp.Process(train).ToArray();
             //var testDocs = nlp.Process(test).ToArray();
 
             //Train a FastText supervised classifier with a multi-label loss (OneVsAll)
-            var fastText = new FastText(Language.Spanish, 0, "Reuters-Classifier");
+            var fastText = new FastText(Language.English, 0, "wiki-word2vec"); //"Reuters-Classifier"
 
             fastText.Data.Type = FastText.ModelType.Supervised;
             fastText.Data.Loss = FastText.LossType.OneVsAll;
@@ -60,7 +60,7 @@ namespace ProyectoIA.TextClasification
             fastText.Train(trainDocs);
 
             //You can also auto-tune the model using the algorithm from https://ai.facebook.com/blog/fasttext-blog-post-open-source-in-brief/
-            fastText.AutoTuneTrain(trainDocs, trainDocs, new FastText.AutoTuneOptions());
+            //fastText.AutoTuneTrain(trainDocs, trainDocs, new FastText.AutoTuneOptions());
 
             //Compute predictions
             Dictionary<IDocument, Dictionary<string, float>> predTrain, predTest;
