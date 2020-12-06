@@ -7,14 +7,12 @@
     <tr>
       <th>Texto</th>
       <th>Tópicos</th>
-      <th>Tokens</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let forecast of forecasts; index as i">
       <td>{{ forecast.text }}</td>
       <td>{{ forecast.topics }}</td>
-      <td>{{ forecast.tokens }}</td>
     </tr>
   </tbody>
 </table>

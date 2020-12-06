@@ -32,7 +32,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
         {
             var train = GetTweets(2000).Select(t => t.text).ToList();
             var result = machinneLearnning.LDAAsync(train);
-            var resultTextClasification = machinneLearnning.TextClasification(train);
+           // var resultTextClasification = machinneLearnning.TextClasification(train);
             List<TableTopics> returnValue = new List<TableTopics>();
             int index = 0;
             foreach (var item in result.Item1)
@@ -48,6 +48,26 @@ namespace ProyectoTesisBussiness.BussinessControllers
             
             return returnValue;
         }
-        
+
+        public IEnumerable<TableTopics> NERTweets()
+        {
+            var train = GetTweets(2000).Select(t => t.text).ToList();
+            var result = machinneLearnning.LDAAsync(train);
+            // var resultTextClasification = machinneLearnning.TextClasification(train);
+            List<TableTopics> returnValue = new List<TableTopics>();
+            int index = 0;
+            foreach (var item in result.Item1)
+            {
+                var tokens = machinneLearnning.Tokens(item);
+                var vec = machinneLearnning.WordToVec(item);
+                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), vec.ToArray());
+
+                returnValue.Add(dictionary);
+                index++;
+            }
+
+            return returnValue;
+        }
+
     }
 }

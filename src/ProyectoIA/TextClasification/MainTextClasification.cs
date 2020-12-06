@@ -29,21 +29,21 @@ namespace ProyectoIA.TextClasification
 
 
             //Download the Reuters corpus if necessary
-            //var (train, test) = await Corpus.Reuters.GetAsync();
+            var (train, test) = await Corpus.Reuters.GetAsync();
 
-            List<IDocument> training = new List<IDocument>();
+            /*List<IDocument> training = new List<IDocument>();
             foreach (var item in stringArray)
             {
                 training.Add(new Document(item, Language.English));
-            }
+            }*/
 
-            IDocument[] train = training.ToArray();
+            //IDocument[] train = training.ToArray();
 
             //Parse the documents using the English pipeline, as the text data is untokenized so far
             var nlp = Pipeline.For(Language.English);
 
             var trainDocs = nlp.Process(train).ToArray();
-            //var testDocs = nlp.Process(test).ToArray();
+            var testDocs = nlp.Process(test).ToArray();
 
             //Train a FastText supervised classifier with a multi-label loss (OneVsAll)
             var fastText = new FastText(Language.English, 0, "wiki-word2vec"); //"Reuters-Classifier"
@@ -60,7 +60,7 @@ namespace ProyectoIA.TextClasification
             fastText.Train(trainDocs);
 
             //You can also auto-tune the model using the algorithm from https://ai.facebook.com/blog/fasttext-blog-post-open-source-in-brief/
-            //fastText.AutoTuneTrain(trainDocs, trainDocs, new FastText.AutoTuneOptions());
+            fastText.AutoTuneTrain(trainDocs, trainDocs, new FastText.AutoTuneOptions());
 
             //Compute predictions
             Dictionary<IDocument, Dictionary<string, float>> predTrain, predTest;
@@ -69,16 +69,16 @@ namespace ProyectoIA.TextClasification
                 predTrain = trainDocs.AsParallel().Select(d => (Doc: d, Pred: fastText.Predict(d))).ToDictionary(d => d.Doc, d => d.Pred);
             }
 
-            /*using (new Measure(Logger, "Computing test set predictions", testDocs.Length))
+            using (new Measure(Logger, "Computing test set predictions", testDocs.Length))
             {
                 predTest = testDocs.AsParallel().Select(d => (Doc: d, Pred: fastText.Predict(d))).ToDictionary(d => d.Doc, d => d.Pred);
-            }*/
+            }
 
             var resultsTrain = ComputeStats(predTrain);
-            //var resultsTest = ComputeStats(predTest);
+            var resultsTest = ComputeStats(predTest);
 
-            /*Console.WriteLine("\n\n\n--- Results ---\n\n\n");
-            foreach (var res in resultsTrain.Zip(resultsTest))
+            Console.WriteLine("\n\n\n--- Results ---\n\n\n");
+            /*foreach (var res in resultsTrain.Zip(resultsTest))
             {
                 Console.WriteLine($"\tScore cutoff: {res.First.Cutoff:n2} Train: F1={res.First.F1:n2} P={res.First.Precision:n2} R={res.First.Recall:n2} Test: F1={res.Second.F1:n2} P={res.Second.Precision:n2} R={res.Second.Recall:n2}");
             }*/

@@ -16,7 +16,7 @@ export class FetchDataComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     let params = new HttpParams();
     params = params.append('limit', "10");
-    http.get<String[]>(baseUrl + 'DataSet/api/getAll', { params }).subscribe(result => {
+    http.get<String[]>(baseUrl + 'DataSet/api/getLDA', { params }).subscribe(result => {
       console.log(result);
       
       for (const key in result) {
@@ -29,9 +29,3 @@ export class FetchDataComponent {
   }
 }
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}

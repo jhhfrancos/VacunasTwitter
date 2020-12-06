@@ -23,13 +23,23 @@ namespace ProyectoTesis.Controllers
             bussiness = new TweetsProfilesBussiness();
         }
 
-        [Route("api/getAll")]
+        [Route("api/getLDA")]
         [HttpGet]
-        public IEnumerable<TableTopics> GetAll(int limit)
+        public IEnumerable<TableTopics> GetLDA(int limit)
         {
             var tweet = bussiness.GetTweets(limit);
             var result = bussiness.LDATweets();
             
+            return result;
+        }
+
+        [Route("api/getNER")]
+        [HttpGet]
+        public IEnumerable<TableTopics> GetNER(int limit)
+        {
+            var tweet = bussiness.GetTweets(limit);
+            var result = bussiness.NERTweets();
+
             return result;
         }
     }

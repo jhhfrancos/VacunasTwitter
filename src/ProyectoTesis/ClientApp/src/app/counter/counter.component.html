@@ -1,7 +1,18 @@
-<h1>Counter</h1>
+<h1 id="tableLabel">Nombramiento de entidades</h1>
 
-<p>This is a simple example of an Angular component.</p>
+<p *ngIf="!forecasts"><em>Loading...</em></p>
 
-<p aria-live="polite">Current count: <strong>{{ currentCount }}</strong></p>
-
-<button class="btn btn-primary" (click)="incrementCounter()">Increment</button>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+  <thead>
+    <tr>
+      <th>Texto</th>
+      <th>Tokens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of forecasts; index as i">
+      <td>{{ forecast.text }}</td>
+      <td>{{ forecast.tokens }}</td>
+    </tr>
+  </tbody>
+</table>
