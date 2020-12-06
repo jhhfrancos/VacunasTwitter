@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "VwAgrNSlwZ8COVJEWz7lsOZWz7EoQ7pkkTiEwUvCh0qemry+6UP/3uU8Mso9LpVcOcEEAXhXcw2CKA4hrmvrgQ==",
+  "dgSpecHash": "h2yFW0RnA/it5W0KO1AnbxU+4cxvTh6jnGE0FZ/D8GPlWGP5M/RyHGYh1KWG1uBCeJqklHZbxbrB8Y8ql3RxTQ==",
   "success": true,
-  "projectFilePath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoTesisModels\\ProyectoTesisModels.csproj",
+  "projectFilePath": "E:\\Proyectos VS\\VacunasTwitter\\src\\ProyectoTesisModels\\ProyectoTesisModels.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Jhh\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\Jhh\\.nuget\\packages\\mongodb.bson\\2.11.4\\mongodb.bson.2.11.4.nupkg.sha512",
-    "C:\\Users\\Jhh\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\mongodb.bson\\2.11.4\\mongodb.bson.2.11.4.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }

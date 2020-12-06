@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {}
+    "E:\\Proyectos VS\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {}
   },
   "projects": {
-    "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {
+    "E:\\Proyectos VS\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj",
+        "projectUniqueName": "E:\\Proyectos VS\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj",
         "projectName": "ProyectoIA",
-        "projectPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj",
-        "packagesPath": "C:\\Users\\Jhh\\.nuget\\packages\\",
-        "outputPath": "D:\\Maestria\\Tesis\\Vacunas\\TwitterVacunas\\VacunasTwitter\\src\\ProyectoIA\\obj\\",
+        "projectPath": "E:\\Proyectos VS\\VacunasTwitter\\src\\ProyectoIA\\ProyectoIA.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "E:\\Proyectos VS\\VacunasTwitter\\src\\ProyectoIA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "E:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jhh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -30,6 +30,7 @@
         },
         "frameworks": {
           "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -41,6 +42,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "dependencies": {
             "Catalyst": {
               "target": "Package",
@@ -71,7 +73,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

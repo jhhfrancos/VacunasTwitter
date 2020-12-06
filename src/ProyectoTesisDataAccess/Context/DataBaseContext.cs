@@ -15,7 +15,7 @@ namespace ProyectoTesisDataAccess.Context
         
         public DataBaseContext()
         {
-            dbClient = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
+            dbClient = new MongoClient("mongodb://192.168.1.215:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
         }
 
         public IMongoCollection<BsonDocument> getCollection(string DataBase, string collection)
