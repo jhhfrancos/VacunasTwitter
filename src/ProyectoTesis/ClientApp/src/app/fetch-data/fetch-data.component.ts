@@ -15,7 +15,8 @@ export class FetchDataComponent {
   }*/
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     let params = new HttpParams();
-    params = params.append('limit', "10");
+    localStorage.setItem('limit', "10");
+    params = params.append('limit', localStorage.getItem("limit"));
     http.get<String[]>(baseUrl + 'DataSet/api/getLDA', { params }).subscribe(result => {
       console.log(result);
       
