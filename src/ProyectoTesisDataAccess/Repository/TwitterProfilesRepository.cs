@@ -38,5 +38,18 @@ namespace ProyectoTesisDataAccess.Repository
             }
             return tweets;
         }
+
+        public bool SaveTweet(string[] tweets)
+        {
+            foreach (var item in tweets)
+            {
+                var jsonDoc = BsonDocument.Parse(item);
+                var filter = Builders<BsonDocument>.Filter.Eq("id", jsonDoc.GetValue("id"));
+                var studentDocument = collection.Find(filter).FirstOrDefault();
+                if (studentDocument == null)
+                    collection.InsertOne(jsonDoc);
+            }
+            return true;
+        }
     }
 }

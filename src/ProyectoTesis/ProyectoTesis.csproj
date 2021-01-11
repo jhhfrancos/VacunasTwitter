@@ -29,8 +29,16 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="twitter4j\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="twitter4j\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="twitter4j\**" />
+    <EmbeddedResource Remove="twitter4j\**" />
+    <TypeScriptCompile Remove="twitter4j\**" />
   </ItemGroup>
 
   <ItemGroup>

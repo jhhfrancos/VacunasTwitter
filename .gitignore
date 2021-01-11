@@ -231,3 +231,22 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 bin
+data
+obj
+bin
+obj
+bin
+obj
+bin
+obj
+/src/ProyectoTesis/twitter4j/list.txt
+/src/ProyectoTesis/twitter4j/listAll.txt
+listAll.txt
+list.txt
+obj
+obj
+bin
+obj
+bin
+obj
+bin

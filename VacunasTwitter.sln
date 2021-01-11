@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoTesisModels", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoIA", "src\ProyectoIA\ProyectoIA.csproj", "{9ABF3111-0B8C-4BF1-BC8C-A05199229320}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterRetrieval", "src\TwitterRetrieval\TwitterRetrieval.csproj", "{BE041AAE-A57B-4BBD-8D56-5DCC0B541AED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9ABF3111-0B8C-4BF1-BC8C-A05199229320}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ABF3111-0B8C-4BF1-BC8C-A05199229320}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ABF3111-0B8C-4BF1-BC8C-A05199229320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE041AAE-A57B-4BBD-8D56-5DCC0B541AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE041AAE-A57B-4BBD-8D56-5DCC0B541AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE041AAE-A57B-4BBD-8D56-5DCC0B541AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE041AAE-A57B-4BBD-8D56-5DCC0B541AED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
