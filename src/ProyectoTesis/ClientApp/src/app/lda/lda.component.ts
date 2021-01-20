@@ -9,9 +9,9 @@ import { LdaService } from './lda.component.service';
 })
 export class LdaComponent implements OnInit {
 
-  
+
   //Contains all subscription for the component
-  private subscriptions : Subscription[] = [];
+  private subscriptions: Subscription[] = [];
   loading$ = this.ldaService.loadingSubject$.asObservable();
   public ldas: String[];
 
@@ -24,11 +24,13 @@ export class LdaComponent implements OnInit {
       }));
 
     this.ldaService.getText();
+
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
   
 
 }

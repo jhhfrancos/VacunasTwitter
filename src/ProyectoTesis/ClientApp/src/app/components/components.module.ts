@@ -6,6 +6,9 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SettingsComponent } from './settings/settings.component';
+import { BarSvgComponent } from './d3graphics/bar-svg/bar-svg.component';
+import { WordCloudSvgComponent } from './d3graphics/word-cloud-svg/word-cloud-svg.component';
+
 
 @NgModule({
   imports: [
@@ -16,13 +19,17 @@ import { SettingsComponent } from './settings/settings.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    SettingsComponent
+    SettingsComponent,
+    BarSvgComponent,
+    WordCloudSvgComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    SettingsComponent
+    SettingsComponent,
+    BarSvgComponent,
+    WordCloudSvgComponent
   ]
 })
 export class ComponentsModule { }

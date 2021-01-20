@@ -18,6 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {ComponentsModule} from '../../components/components.module'
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatSelectModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    
+    ComponentsModule
   ],
   declarations: [
     TableroComponent,

@@ -1,4 +1,3 @@
-
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
@@ -13,22 +12,36 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                      <th>Texto</th>
-                                      <th>Tópicos</th>
+                                        <th>Texto</th>
+                                        <th>Tópicos</th>
                                     </tr>
-                                  </thead>
-                                  <tbody>
+                                </thead>
+                                <tbody>
                                     <mat-spinner diameter="20" *ngIf="loading$ | async"></mat-spinner>
                                     <tr *ngFor="let lda of ldas; index as i">
-                                      <td>{{ lda.text }}</td>
-                                      <td>{{ lda.topics }}</td>
+                                        <td>{{ lda.text }}</td>
+                                        <td>{{ lda.topics }}</td>
                                     </tr>
-                                  </tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Grafico de barras</h4>
+                        <p class="card-category"> Ldatent dichiclet allocation</p>
+                    </div>
+                    <div class="card-body">
+                        <app-bar-svg></app-bar-svg>
+                        <app-word-cloud-svg></app-word-cloud-svg>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div class="card card-plain">
                     <div class="card-header card-header-danger">
