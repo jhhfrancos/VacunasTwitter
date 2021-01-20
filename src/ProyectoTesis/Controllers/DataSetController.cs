@@ -30,11 +30,9 @@ namespace ProyectoTesis.Controllers
         [HttpGet]
         public IEnumerable<TableTopics> GetLDA(int limit)
         {
-            //var tweet = bussiness.GetTweets(limit);
-            //var result = bussiness.LDATweets();
-            mongoServices.UpdateDB();
-            //return result;
-            return null;
+            var tweet = bussiness.GetTweets(limit);
+            var result = bussiness.LDATweets();
+            return result;
         }
 
         [Route("api/getNER")]
@@ -43,8 +41,16 @@ namespace ProyectoTesis.Controllers
         {
             var tweet = bussiness.GetTweets(limit);
             var result = bussiness.NERTweets();
-
             return result;
         }
+
+        [Route("api/updateDB")]
+        [HttpGet]
+        public bool UpdateDB(int limit)
+        {
+            mongoServices.UpdateDB();
+            return true;
+        }
+
     }
 }

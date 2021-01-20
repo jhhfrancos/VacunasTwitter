@@ -43,11 +43,18 @@ namespace ProyectoTesisDataAccess.Repository
         {
             foreach (var item in tweets)
             {
-                var jsonDoc = BsonDocument.Parse(item);
-                var filter = Builders<BsonDocument>.Filter.Eq("id", jsonDoc.GetValue("id"));
-                var studentDocument = collection.Find(filter).FirstOrDefault();
-                if (studentDocument == null)
-                    collection.InsertOne(jsonDoc);
+                try
+                {
+                    var jsonDoc = BsonDocument.Parse(item);
+                    var filter = Builders<BsonDocument>.Filter.Eq("id", jsonDoc.GetValue("id"));
+                    var studentDocument = collection.Find(filter).FirstOrDefault();
+                    if (studentDocument == null)
+                        collection.InsertOne(jsonDoc);
+                    }
+                catch (Exception)
+                {
+                    continue;
+                }
             }
             return true;
         }
