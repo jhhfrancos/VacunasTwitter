@@ -1,7 +1,7 @@
 import { Component, Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { BaseService } from 'app/commons/base-service.service';
+import { BaseService } from 'app/commons/services/base-service.service';
 
 
 @Injectable({
