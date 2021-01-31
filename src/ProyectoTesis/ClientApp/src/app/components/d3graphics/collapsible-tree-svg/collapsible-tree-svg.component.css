@@ -1,45 +1,47 @@
-.d3-chart {
+
+
+.contentcollapse .d3-chart {
     width: 100%;
     min-height:600px;
     border: 1px solid gray;
   }
-  .node circle {
+  .contentcollapse .node circle {
     fill: #fff;
     stroke: steelblue;
     stroke-width: 0.2px;
   }
   
-  .node text {
+  .contentcollapse .node text {
     font: 10px sans-serif;
   }
   
-  .link {
+  .contentcollapse .link {
     fill: none;
     stroke: #ccc;
     stroke-width: 0.5px;
   }
   
-  .active {
+  .contentcollapse .active {
     stroke-width: 1px !important;
   }
-  .selected text{
+  .contentcollapse .selected text{
     stroke-width: 2px !important;
     fill: #0f0;
   }
   
-  .ghostCircle.show{
+  .contentcollapse .ghostCircle.show{
       display:block;
   }
-  .ghostCircle.over{
+  .contentcollapse .ghostCircle.over{
     fill: green !important;
     stroke: steelblue;
     stroke-width: 0.2px;
   }
   
-  .ghostCircle, .active .ghostCircle{
+  .contentcollapse .ghostCircle, .active .ghostCircle{
        display: none;
   }
-  .templink {
+  .contentcollapse .templink {
     fill: none;
     stroke: red;
     stroke-width: 3px;

@@ -9,6 +9,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { BarSvgComponent } from './d3graphics/bar-svg/bar-svg.component';
 import { WordCloudSvgComponent } from './d3graphics/word-cloud-svg/word-cloud-svg.component';
 import { CollapsibleTreeSvgComponent } from './d3graphics/collapsible-tree-svg/collapsible-tree-svg.component';
+import { ForceDirectedSvgComponent } from './d3graphics/force-directed-svg/force-directed-svg.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CollapsibleTreeSvgComponent } from './d3graphics/collapsible-tree-svg/c
     SettingsComponent,
     BarSvgComponent,
     WordCloudSvgComponent,
-    CollapsibleTreeSvgComponent
+    CollapsibleTreeSvgComponent,
+    ForceDirectedSvgComponent
   ],
   exports: [
     FooterComponent,
@@ -32,7 +34,8 @@ import { CollapsibleTreeSvgComponent } from './d3graphics/collapsible-tree-svg/c
     SettingsComponent,
     BarSvgComponent,
     WordCloudSvgComponent,
-    CollapsibleTreeSvgComponent
+    CollapsibleTreeSvgComponent,
+    ForceDirectedSvgComponent
   ]
 })
 export class ComponentsModule { }

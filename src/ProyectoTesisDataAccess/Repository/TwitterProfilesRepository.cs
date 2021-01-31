@@ -50,11 +50,51 @@ namespace ProyectoTesisDataAccess.Repository
                     var studentDocument = collection.Find(filter).FirstOrDefault();
                     if (studentDocument == null)
                         collection.InsertOne(jsonDoc);
-                    }
+                }
                 catch (Exception)
                 {
                     continue;
                 }
+            }
+            return true;
+        }
+
+        public bool DataCleansing()
+        {
+            if(dataContext.CollectionExists("Tweets_Clean")) dataContext.getCollection("Twitter", "Tweets_Clean");
+            string map = @"
+                function() {
+                    emit(this.id, this);
+                }";
+            string reduce = @"        
+                function(id, tweet) {
+                    var texto = tweet[0].text;
+                    //Pasar a minusculas
+                    texto = texto.toLowerCase();
+                    //Quitar caracteres especiales
+                    texto = texto.replace(/[^a-zA-Z0-9áéíóú ]/g, '');
+                    return {
+                        _id:id,
+                        text:texto};
+                }";
+            BsonJavaScript mapScript = new BsonJavaScript(map);
+            BsonJavaScript reduceScript = new BsonJavaScript(reduce);
+
+            FilterDefinitionBuilder<BsonDocument> filterBuilder = new FilterDefinitionBuilder<BsonDocument>();
+            FilterDefinition<BsonDocument> filter = filterBuilder.Empty;
+            MapReduceOptions<BsonDocument, BsonDocument> options = new MapReduceOptions<BsonDocument, BsonDocument>
+            {
+                Filter = filter,
+                OutputOptions = MapReduceOutputOptions.Reduce("Tweets_Clean", "Twitter"),
+                Verbose = true
+            };
+            try
+            {
+                collection.MapReduce(mapScript, reduceScript, options).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred {ex.Message}");
             }
             return true;
         }

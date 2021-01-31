@@ -12,6 +12,7 @@ namespace ProyectoTesisDataAccess.Context
     public class DataBaseContext
     {
         private MongoClient dbClient;
+        private string dbName = "Twitter";
         
         public DataBaseContext()
         {
@@ -30,6 +31,27 @@ namespace ProyectoTesisDataAccess.Context
                 throw ex;
             }
         }
-        
+
+        public MongoDatabaseBase getDataBase()
+        {
+            try
+            {
+                return (MongoDatabaseBase) dbClient.GetDatabase("Twitter");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool CollectionExists(string collectionName)
+        {
+            var filter = new BsonDocument("name", collectionName);
+            var options = new ListCollectionNamesOptions { Filter = filter };
+
+            return dbClient.GetDatabase(dbName).ListCollectionNames(options).Any();
+        }
+
     }
 }

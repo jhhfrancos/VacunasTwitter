@@ -52,5 +52,12 @@ namespace ProyectoTesis.Controllers
             return true;
         }
 
+        [Route("api/dataCleansing")]
+        [HttpGet]
+        public bool DataCleansingDB()
+        {
+            return mongoServices.DataCleansing(); ;
+        }
+
     }
 }

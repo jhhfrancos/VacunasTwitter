@@ -20,6 +20,7 @@ export class AdminLayoutComponent implements OnInit {
   //Contains all subscription for the component
   private subscriptions : Subscription[] = [];
   loadingDB$ = this.adminService.loadingSubject$.asObservable();
+  loadingCleansingDB$ = this.adminService.loadingCleansingDB$.asObservable();
 
   constructor( 
       public location: Location, 
@@ -175,6 +176,10 @@ export class AdminLayoutComponent implements OnInit {
 
   UpdateDB(){
     this.adminService.UpdateDB();
+  }
+
+  DataCleansingDB(){
+      this.adminService.DataCleansingDB();
   }
 
 }

@@ -20,5 +20,12 @@ namespace ProyectoTesisBussiness.MongoBussiness
             repository.SaveTweet(docs);
             return true;
         }
+
+        public bool DataCleansing()
+        {
+            var result = repository.DataCleansing();
+            return result;
+        }
+
     }
 }

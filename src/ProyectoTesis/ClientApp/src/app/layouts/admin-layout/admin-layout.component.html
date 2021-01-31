@@ -45,6 +45,13 @@
                     </div>
                 </li>
         
+                <li class="button-container">
+                    <div>
+                        <button [disabled]="loadingCleansingDB$ | async" class="btn btn-info btn-block btn-fill" (click)="DataCleansingDB()">
+                            Generar limpieza <mat-spinner diameter="15" *ngIf="loadingCleansingDB$ | async"></mat-spinner> 
+                        </button> 
+                    </div>
+                </li>
                 <!--
                 
                 <li>
