@@ -13,27 +13,43 @@ namespace ProyectoTesisDataAccess.Repository
     public class TwitterProfilesRepository
     {
         private DataBaseContext dataContext;
-        private IMongoCollection<BsonDocument> collection;
+        private IMongoCollection<BsonDocument> collectionBase;
+        private IMongoCollection<BsonDocument> collectionClean;
+        private static string collectionBaseName = "Tweets_Profiles";
+        private static string collectionCleanName = "Tweets_Clean";
         public TwitterProfilesRepository()
         {
             dataContext = new DataBaseContext();
-            collection = dataContext.getCollection("Twitter", "Tweets_Profiles");
+            collectionBase = dataContext.getCollection(collectionBaseName);
+            collectionClean = dataContext.getCollection(collectionCleanName);
         }
 
         public Tweet GetFirstTweet()
         {
-            var firstDocument = collection.Find(new BsonDocument()).FirstOrDefault();
+            var firstDocument = collectionBase.Find(new BsonDocument()).FirstOrDefault();
             Tweet tweet = BsonSerializer.Deserialize<Tweet>(firstDocument);
             return tweet;
         }
 
-        public List<Tweet> GetAllTweets(int limit)
+        public List<Tweet> GetAllBaseTweets(int limit)
         {
-            var documents = collection.Find(new BsonDocument()).Limit(limit).ToList();
+            var documents = collectionBase.Find(new BsonDocument()).Limit(limit).ToList();
             List<Tweet> tweets = new List<Tweet>();
             foreach (var item in documents)
             {
                 Tweet tweet = BsonSerializer.Deserialize<Tweet>(item);
+                tweets.Add(tweet);
+            }
+            return tweets;
+        }
+
+        public List<TweetClean> GetCleanTweets(int limit)
+        {
+            var documents = collectionClean.Find(new BsonDocument()).Limit(limit).ToList();
+            List<TweetClean> tweets = new List<TweetClean>();
+            foreach (var item in documents)
+            {
+                TweetClean tweet = BsonSerializer.Deserialize<TweetClean>(item);
                 tweets.Add(tweet);
             }
             return tweets;
@@ -47,9 +63,9 @@ namespace ProyectoTesisDataAccess.Repository
                 {
                     var jsonDoc = BsonDocument.Parse(item);
                     var filter = Builders<BsonDocument>.Filter.Eq("id", jsonDoc.GetValue("id"));
-                    var studentDocument = collection.Find(filter).FirstOrDefault();
+                    var studentDocument = collectionBase.Find(filter).FirstOrDefault();
                     if (studentDocument == null)
-                        collection.InsertOne(jsonDoc);
+                        collectionBase.InsertOne(jsonDoc);
                 }
                 catch (Exception)
                 {
@@ -61,21 +77,23 @@ namespace ProyectoTesisDataAccess.Repository
 
         public bool DataCleansing()
         {
-            if(dataContext.CollectionExists("Tweets_Clean")) dataContext.getCollection("Twitter", "Tweets_Clean");
+            if(dataContext.CollectionExists(collectionCleanName))  dataContext.DropCollection(collectionCleanName);
             string map = @"
                 function() {
-                    emit(this.id, this);
+                    emit({id:this.id, user:this.user.id}, this.text);
                 }";
-            string reduce = @"        
+            /*
+             * //Transformar camel case a texto separado
+             *      //Pasar a minusculas
+             *///Quitar caracteres especiales
+            //TODO: No recupera correctamente el user
+            string reduce = @"
                 function(id, tweet) {
-                    var texto = tweet[0].text;
-                    //Pasar a minusculas
+                    var texto = tweet[0];
+                    texto = texto.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
                     texto = texto.toLowerCase();
-                    //Quitar caracteres especiales
                     texto = texto.replace(/[^a-zA-Z0-9áéíóú ]/g, '');
-                    return {
-                        _id:id,
-                        text:texto};
+                    return texto;
                 }";
             BsonJavaScript mapScript = new BsonJavaScript(map);
             BsonJavaScript reduceScript = new BsonJavaScript(reduce);
@@ -85,12 +103,12 @@ namespace ProyectoTesisDataAccess.Repository
             MapReduceOptions<BsonDocument, BsonDocument> options = new MapReduceOptions<BsonDocument, BsonDocument>
             {
                 Filter = filter,
-                OutputOptions = MapReduceOutputOptions.Reduce("Tweets_Clean", "Twitter"),
+                OutputOptions = MapReduceOutputOptions.Reduce(collectionCleanName, "Twitter"),
                 Verbose = true
             };
             try
             {
-                collection.MapReduce(mapScript, reduceScript, options).ToList();
+                collectionBase.MapReduce(mapScript, reduceScript, options).ToList();
             }
             catch (Exception ex)
             {

@@ -25,8 +25,14 @@ namespace ProyectoTesisBussiness.BussinessControllers
         }
         public List<Tweet> GetTweets(int limit)
         {
-            return twitterProfilesRepository.GetAllTweets(limit);
+            return twitterProfilesRepository.GetAllBaseTweets(limit);
         }
+
+        public List<TweetClean> GetCleanTweets(int limit)
+        {
+            return twitterProfilesRepository.GetCleanTweets(limit);
+        }
+        
 
         public IEnumerable<TableTopics> LDATweets()
         {

@@ -19,11 +19,12 @@ namespace ProyectoTesisDataAccess.Context
             dbClient = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false"); //192.168.1.215
         }
 
-        public IMongoCollection<BsonDocument> getCollection(string DataBase, string collection)
+        public IMongoCollection<BsonDocument> getCollection(string collection)
         {
             try
             {
-                var collec = dbClient.GetDatabase(DataBase).GetCollection<BsonDocument>(collection);
+                var collec = dbClient.GetDatabase(dbName).GetCollection<BsonDocument>(collection);
+                
                 return collec;
             }
             catch (Exception ex)
@@ -36,7 +37,7 @@ namespace ProyectoTesisDataAccess.Context
         {
             try
             {
-                return (MongoDatabaseBase) dbClient.GetDatabase("Twitter");
+                return (MongoDatabaseBase) dbClient.GetDatabase(dbName);
             }
             catch (Exception ex)
             {
@@ -52,6 +53,12 @@ namespace ProyectoTesisDataAccess.Context
 
             return dbClient.GetDatabase(dbName).ListCollectionNames(options).Any();
         }
+
+        public void DropCollection(string collection)
+        {
+            dbClient.GetDatabase(dbName).DropCollection(collection);
+        }
+
 
     }
 }
