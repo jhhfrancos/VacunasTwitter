@@ -15,13 +15,14 @@ namespace ProyectoIA.Word2Vec
 
         }
 
-        public async Task<List<string>> Entrenamiento(List<string> stringArray)
+        public async Task<List<string>> Trainning(List<string> stringArray)
         {
             
             List<IDocument> training = new List<IDocument>();
             foreach (var item in stringArray)
             {
-                training.Add(new Document(item, Language.Spanish));
+                var newItem = Utils.Utils.DeleteStopWords(item);
+                training.Add(new Document(newItem, Language.Spanish));
             }
 
             Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-word2vec"));
@@ -31,12 +32,14 @@ namespace ProyectoIA.Word2Vec
             var ft = new FastText(Language.Spanish, 0, "wiki-word2vec");
             ft.Data.Type = FastText.ModelType.CBow;
             ft.Data.Loss = FastText.LossType.NegativeSampling;
+            ft.Data.IgnoreCase = true;
             ft.Train(nlp.Process(training));
+            var vectors = ft.GetVectors();
             //await ft.StoreAsync();
-
             
             return training.Select(t => t.ToJson()).ToList();
         }
+
 
     }
 }

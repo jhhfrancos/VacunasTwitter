@@ -16,15 +16,17 @@ namespace ProyectoTesisBussiness.MongoBussiness
         
         public bool UpdateDB()
         {
-            var docs = Extract.GetDocuments();
-            repository.SaveTweet(docs);
+            //var docsProfiles = Extract.GetDocuments();
+            var docsBase = Extract.GetDocumentsBase();
+            //repository.SaveTweet(docsProfiles);
+            repository.SaveTweet(docsBase, "Tweets_Base");
             return true;
         }
 
         public bool DataCleansing()
         {
-            var result = repository.DataCleansing();
-            return result;
+            var resultProfiles = repository.DataCleansing();
+            return resultProfiles;
         }
 
     }

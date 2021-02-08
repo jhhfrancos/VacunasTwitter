@@ -17,7 +17,7 @@ export class NerService extends BaseService {
   getText() : any {
     this.loadingSubject$.next(true);
     let params = new HttpParams();
-    params = params.append('limit', "10");
+    params = params.append('limit', "1000");
     this.http.get<String[]>(this.baseUrl + 'DataSet/api/getNER', { params }).subscribe(result => {
       this.payload$.next(result);
       this.loadingSubject$.next(false);

@@ -30,8 +30,7 @@ namespace ProyectoTesis.Controllers
         [HttpGet]
         public IEnumerable<TableTopics> GetLDA(int limit)
         {
-            var tweet = bussiness.GetTweets(limit);
-            var result = bussiness.LDATweets();
+            var result = bussiness.LDATweets(limit);
             return result;
         }
 
@@ -39,8 +38,7 @@ namespace ProyectoTesis.Controllers
         [HttpGet]
         public IEnumerable<TableTopics> GetNER(int limit)
         {
-            var tweet = bussiness.GetTweets(limit);
-            var result = bussiness.NERTweets();
+            var result = bussiness.NERTweets(limit);
             return result;
         }
 

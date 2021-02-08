@@ -25,39 +25,20 @@ namespace ProyectoTesisBussiness.BussinessControllers
         }
         public List<Tweet> GetTweets(int limit)
         {
-            return twitterProfilesRepository.GetAllBaseTweets(limit);
+            return twitterProfilesRepository.GetAllTweets(limit);
         }
 
         public List<TweetClean> GetCleanTweets(int limit)
         {
             return twitterProfilesRepository.GetCleanTweets(limit);
         }
-        
 
-        public IEnumerable<TableTopics> LDATweets()
+
+        public IEnumerable<TableTopics> LDATweets(int limit)
         {
-            var train = GetTweets(2000).Select(t => t.text).ToList();
-            var result = machinneLearnning.LDAAsync(train);
-           // var resultTextClasification = machinneLearnning.TextClasification(train);
-            List<TableTopics> returnValue = new List<TableTopics>();
-            int index = 0;
-            foreach (var item in result.Item1)
-            {
-                var tokens = machinneLearnning.Tokens(item);
-                var vec = machinneLearnning.WordToVec(item);
-                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), vec.ToArray());
-                
-                returnValue.Add(dictionary);
-                index++;
-            }
-
-            
-            return returnValue;
-        }
-
-        public IEnumerable<TableTopics> NERTweets()
-        {
-            var train = GetTweets(2000).Select(t => t.text).ToList();
+            var tweet = GetCleanTweets(limit);
+            //var train = GetTweets(2000).Select(t => t.text).ToList();
+            var train = tweet.Select(t => t.value).ToList();
             var result = machinneLearnning.LDAAsync(train);
             // var resultTextClasification = machinneLearnning.TextClasification(train);
             List<TableTopics> returnValue = new List<TableTopics>();
@@ -65,15 +46,34 @@ namespace ProyectoTesisBussiness.BussinessControllers
             foreach (var item in result.Item1)
             {
                 var tokens = machinneLearnning.Tokens(item);
-                var vec = machinneLearnning.WordToVec(item);
+                var vec = machinneLearnning.WordToVec(new List<string>() { item });
                 var dictionary = new TableTopics(item, result.Item2.ElementAt(index), vec.ToArray());
 
                 returnValue.Add(dictionary);
                 index++;
             }
-
             return returnValue;
         }
 
+        public IEnumerable<TableTopics> NERTweets(int limit)
+        {
+            var tweet = GetCleanTweets(limit);
+            //var train = GetTweets(2000).Select(t => t.text).ToList();
+            var train = tweet.Select(t => t.value).ToList();
+            var result = machinneLearnning.LDAAsync(train);
+            // var resultTextClasification = machinneLearnning.TextClasification(train);
+            List<TableTopics> returnValue = new List<TableTopics>();
+            int index = 0;
+            var vec = machinneLearnning.WordToVec(result.Item1);
+            foreach (var item in result.Item1)
+            {
+                var tokens = machinneLearnning.Tokens(item);
+                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), vec.ToArray());
+
+                returnValue.Add(dictionary);
+                index++;
+            }
+            return returnValue;
+        }
     }
 }

@@ -25,58 +25,25 @@ namespace ProyectoIA
             return fastTokenizer.Parse(texto);
         }
 
-        public async Task<(List<string>,List<string>)> Entrenamiento(List<string> stringArray)
+        public async Task<(List<string>, List<string>)> Testing(List<string> stringArray)
         {
-            
-
-            //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
-            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
-
-            //Download the Reuters corpus if necessary
-            List<IDocument> training = new List<IDocument>();
-            foreach (var item in stringArray)
-            {
-                training.Add(new Document(item, Language.Spanish));
-            }
-
-            IDocument[] train = training.ToArray();
-
-
             ///////////-------------
             List<IDocument> testing = new List<IDocument>();
-            testing.Add(new Document("empiezan a sonar mucho las vacunas. Compensa dejar claro que las primeras que se usen habrán demostrado dos", Language.Spanish));
-            testing.Add(new Document("avanza la jornada departamental de vacunación las niñas ente 9 y 17 años recibirán la vacuna contra el VPH. Comunícate con tu Empresa Aseguradora de Planes de Beneficio y pide una cita, o el 29 de agosto acércate a la IPS vacunadora más cercana a tu casa", Language.Spanish));
-            testing.Add(new Document("otro mito. Las vacunas son inseguras. FALSO Las vacunas pasan por una serie de análisis muy rígidos, que evalúan, primero", Language.Spanish));
-            testing.Add(new Document("Una vacuna hecha en tiempo récord cuando se necesitan 10 años para probar su efectividad y los efectos secundarios a largo plazo\n\n¿Podría causar problemas incluso generacionales? No se sabe, son muchas la dudas y pocas las garantías Vayan pasando, yo esperaré", Language.Spanish));
-            testing.Add(new Document("Aquí aclaramos las dudas que tienes sobre la vacuna del COVID-19", Language.Spanish));
-            testing.Add(new Document("Evidencias recientes refuerzan la elevada de las #vacunas. Las vacunas en uso tienen un excelente perfil de seguridad y proporcionan protección, individual y colectiva, frente a numerosas enfermedades infecciosas", Language.Spanish));
-
+            foreach (var item in stringArray)
+            {
+                var newItem = Utils.Utils.DeleteStopWords(item);
+                testing.Add(new Document(newItem,Language.Spanish));
+            }
+            
             IDocument[] test = testing.ToArray();
-            //var (train, test) = await Corpus.Reuters.GetAsync();
 
             //Parse the documents using the English pipeline, as the text data is untokenized so far
             var nlp = Pipeline.For(Language.Spanish);
-
-            var trainDocs = nlp.Process(train).ToArray();
-            
             ///////////////////----------------
             var testDocs = nlp.Process(test).ToArray();
-
-
-            //Train an LDA topic model on the trainind dateset
-            using (var lda = new LDA(Language.Spanish, 0, "viajes-lda"))
-            {
-                lda.Data.NumberOfTopics = 100; //Arbitrary number of topics
-                lda.Train(trainDocs, Environment.ProcessorCount);
-
-                await lda.StoreAsync();
-
-                var stopWords = StopWords.Snowball.For(Language.Spanish);
-            }
-
             List<string> values = new List<string>();
             List<string> topicos = new List<string>();
-            using (var lda = await LDA.FromStoreAsync(Language.Spanish, 0, "viajes-lda"))
+            using (var lda = await LDA.FromStoreAsync(Language.Spanish, 0, "vacunas-lda"))
             {
                 foreach (var doc in testDocs)
                 {
@@ -96,7 +63,51 @@ namespace ProyectoIA
                     }
                 }
             }
-            return (values,topicos);
+
+            return (values, topicos);
         }
+
+        public async Task<bool> Training(List<string> stringArray)
+        {
+            
+
+            //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
+            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
+
+            //Download the Reuters corpus if necessary
+            List<IDocument> training = new List<IDocument>();
+            foreach (var item in stringArray)
+            {
+                var newItem = Utils.Utils.DeleteStopWords(item);
+                training.Add(new Document(newItem, Language.Spanish));
+            }
+
+            IDocument[] train = training.ToArray();
+
+
+            
+            //var (train, test) = await Corpus.Reuters.GetAsync();
+
+            //Parse the documents using the English pipeline, as the text data is untokenized so far
+            var nlp = Pipeline.For(Language.Spanish);
+
+            var trainDocs = nlp.Process(train).ToArray();
+            
+            
+
+            //Train an LDA topic model on the trainind dateset
+            using (var lda = new LDA(Language.Spanish, 0, "vacunas-lda"))
+            {
+                lda.Data.NumberOfTopics = 100; //Arbitrary number of topics
+                lda.Train(trainDocs, Environment.ProcessorCount);
+
+                await lda.StoreAsync();
+
+                var stopWords = StopWords.Snowball.For(Language.Spanish);
+            }
+
+            return true;
+        }
+
     }
 }
