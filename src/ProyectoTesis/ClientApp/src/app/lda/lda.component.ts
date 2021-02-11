@@ -13,6 +13,8 @@ export class LdaComponent implements OnInit {
   //Contains all subscription for the component
   private subscriptions: Subscription[] = [];
   loading$ = this.ldaService.loadingSubject$.asObservable();
+  loadingWordCloud$ = this.ldaService.loadingWordCloudSubject$.asObservable();
+  public wordCloudData: Array<[string, number]> = null;
   public ldas: String[];
 
   constructor(private ldaService: LdaService) { }
@@ -23,7 +25,13 @@ export class LdaComponent implements OnInit {
         this.ldas = result;
       }));
 
+    this.subscriptions.push(this.ldaService.wordCloudSubject$
+      .subscribe(result => {
+        this.wordCloudData = result;
+      }));
+
     this.ldaService.getText();
+    this.ldaService.getWordCloud();
 
   }
 
@@ -31,6 +39,6 @@ export class LdaComponent implements OnInit {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  
+
 
 }

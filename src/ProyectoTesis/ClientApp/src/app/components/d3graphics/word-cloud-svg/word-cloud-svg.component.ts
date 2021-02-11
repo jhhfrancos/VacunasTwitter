@@ -11,7 +11,7 @@ import * as d3Cloud from "d3-cloud";
 export class WordCloudSvgComponent implements OnInit {
 
 
-  //@Input() config: WordCloudConfig;
+  @Input() inputData: Array<[string, number]>;
 
   private source: string = "@RomagueraTeresa: @cubadebatecu Ahora, lo 1ro es demostrar en esta etapa q la vacuna no induce efectos adversos, q afecten a las persona @cubadebatecu Ahora, lo 1ro es demostrar en esta etapa q la vacuna no induce efectos adversos, q afecten a las personas q se la pongan y en 2da instancia, evaluar elementos que permitan analizar su eficacia. \nArriba mi tierra, #Cuba Va\n#Soberana01 https://t.co/Roj9BRHCEK #QuedateEnCasa Programas de salud\n\nSolicita a domicilio en #IPSCajasan:\n\nConsulta médica\n\nTerapias físicas y especiales\n\nVacunación NO PA\n\nVenta de leches de fórmula y complementos nutricionales\n\nInfo: Bucaramanga: 300 302 5431/301 200 6732\nBarrancabermeja: 318 433 6904 https://t.co/JRMUxyZhXB ";
   private words: string[];
@@ -56,7 +56,7 @@ export class WordCloudSvgComponent implements OnInit {
   }
 
   private DataCleansing(): void {
-    this.words = this.source.split(/[\s.]+/g)
+    /*this.words = this.source.split(/[\s.]+/g)
       .map(w => w.replace(/^[“‘"\-—()\[\]{}]+/g, ""))
       .map(w => w.replace(/[;:.!?()\[\]{},"'’”\-—]+$/g, ""))
       .map(w => w.replace(/['’]s$/g, ""))
@@ -71,6 +71,10 @@ export class WordCloudSvgComponent implements OnInit {
       .slice(0, 250)
       .map(([word, size]) => ({ word: word, size: size })); //10 + Math.random() * 90}
 
+    */
+
+    //this.data = this.inputData.map(([word, size]) => ({ word: word, size: 10 + size * 90 }));
+    this.data = this.inputData;
     console.log("data" + this.data);
 
     //this.d3 = Object.assign(await require("d3@6"), {cloud: await require("d3-cloud@1")})

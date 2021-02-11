@@ -31,8 +31,8 @@ namespace ProyectoIA
             List<IDocument> testing = new List<IDocument>();
             foreach (var item in stringArray)
             {
-                var newItem = Utils.Utils.DeleteStopWords(item);
-                testing.Add(new Document(newItem,Language.Spanish));
+                //var newItem = Utils.Utils.DeleteStopWords(item);
+                testing.Add(new Document(item,Language.Spanish));
             }
             
             IDocument[] test = testing.ToArray();
@@ -78,8 +78,8 @@ namespace ProyectoIA
             List<IDocument> training = new List<IDocument>();
             foreach (var item in stringArray)
             {
-                var newItem = Utils.Utils.DeleteStopWords(item);
-                training.Add(new Document(newItem, Language.Spanish));
+                //var newItem = Utils.Utils.DeleteStopWords(item);
+                training.Add(new Document(item, Language.Spanish));
             }
 
             IDocument[] train = training.ToArray();

@@ -37,8 +37,9 @@
                     </div>
                     <div class="card-body">
                         <app-bar-svg></app-bar-svg>
-                        <app-word-cloud-svg></app-word-cloud-svg>
-                        
+                        <div *ngIf="loadingWordCloud$ | async">
+                            <app-word-cloud-svg [inputData]="wordCloudData"></app-word-cloud-svg>
+                        </div>
                     </div>
                 </div>
             </div>

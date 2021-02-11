@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ProyectoTesisBussiness.BussinessControllers;
 using ProyectoTesisBussiness.MongoBussiness;
@@ -15,15 +16,15 @@ namespace ProyectoTesis.Controllers
     [ApiController]
     public class DataSetController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
 
         private TweetsProfilesBussiness bussiness;
         private MongoServices mongoServices;
-        public DataSetController(ILogger<WeatherForecastController> logger)
+        private IConfiguration configuration;
+        public DataSetController(IConfiguration _iConfig)
         {
-            _logger = logger;
             bussiness = new TweetsProfilesBussiness();
             mongoServices = new MongoServices();
+            configuration = _iConfig;
         }
 
         [Route("api/getLDA")]
@@ -55,6 +56,13 @@ namespace ProyectoTesis.Controllers
         public bool DataCleansingDB()
         {
             return mongoServices.DataCleansing(); ;
+        }
+
+        [Route("api/wordCloud")]
+        [HttpGet]
+        public IEnumerable<FrequencyWord> WordCloud(int limit)
+        {
+            return bussiness.WordCloud(limit);
         }
 
     }

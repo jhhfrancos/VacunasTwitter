@@ -38,7 +38,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
         {
             var tweet = GetCleanTweets(limit);
             //var train = GetTweets(2000).Select(t => t.text).ToList();
-            var train = tweet.Select(t => t.value).ToList();
+            var train = tweet.Select(t => t.value.textoStop).ToList();
             var result = machinneLearnning.LDAAsync(train);
             // var resultTextClasification = machinneLearnning.TextClasification(train);
             List<TableTopics> returnValue = new List<TableTopics>();
@@ -46,8 +46,8 @@ namespace ProyectoTesisBussiness.BussinessControllers
             foreach (var item in result.Item1)
             {
                 var tokens = machinneLearnning.Tokens(item);
-                var vec = machinneLearnning.WordToVec(new List<string>() { item });
-                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), vec.ToArray());
+                //var vec = machinneLearnning.WordToVec(new List<string>() { item });
+                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), tokens.ToArray());
 
                 returnValue.Add(dictionary);
                 index++;
@@ -59,21 +59,30 @@ namespace ProyectoTesisBussiness.BussinessControllers
         {
             var tweet = GetCleanTweets(limit);
             //var train = GetTweets(2000).Select(t => t.text).ToList();
-            var train = tweet.Select(t => t.value).ToList();
+            var train = tweet.Select(t => t.value.texto).ToList();
             var result = machinneLearnning.LDAAsync(train);
             // var resultTextClasification = machinneLearnning.TextClasification(train);
             List<TableTopics> returnValue = new List<TableTopics>();
             int index = 0;
-            var vec = machinneLearnning.WordToVec(result.Item1);
+            //var vec = machinneLearnning.WordToVec(result.Item1);
             foreach (var item in result.Item1)
             {
                 var tokens = machinneLearnning.Tokens(item);
-                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), vec.ToArray());
+                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), tokens.ToArray());
 
                 returnValue.Add(dictionary);
                 index++;
             }
             return returnValue;
+        }
+
+        public IEnumerable<FrequencyWord> WordCloud(int limit)
+        {
+            var tweet = GetCleanTweets(limit);
+            var train = tweet.Select(t => t.value.textoStop).ToList();
+            List<TableTopics> returnValue = new List<TableTopics>();
+            var vec = machinneLearnning.WordToVec(train);
+            return vec;
         }
     }
 }

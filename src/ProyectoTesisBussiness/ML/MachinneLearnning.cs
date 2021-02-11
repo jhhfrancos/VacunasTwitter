@@ -1,6 +1,7 @@
 ﻿using ProyectoIA;
 using ProyectoIA.TextClasification;
 using ProyectoIA.Word2Vec;
+using ProyectoTesisModels.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace ProyectoTesisBussiness.ML
             return listTokens?.Select(t => t.ToString())?.ToArray();
         }
 
-        public List<string> WordToVec(List<string> texto)
+        public IEnumerable<FrequencyWord> WordToVec(List<string> texto)
         {
             var vec = word2Vec.Trainning(texto).Result;
             return vec;

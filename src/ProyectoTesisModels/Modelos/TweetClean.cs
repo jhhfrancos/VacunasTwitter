@@ -9,6 +9,6 @@ namespace ProyectoTesisModels.Modelos
     public class TweetClean
     {
         public IdClean _id { get; set; }
-        public string value { get; set; }
+        public Value value { get; set; }
     }
 }
