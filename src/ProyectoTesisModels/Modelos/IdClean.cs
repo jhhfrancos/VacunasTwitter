@@ -7,7 +7,7 @@ namespace ProyectoTesisModels.Modelos
     [BsonIgnoreExtraElements]
     public class IdClean
     {
-        public ObjectId id { get; set; }
-        public Int64 user { get; set; }
+        public Int64 idTweet { get; set; }
+        public Int64 idUser { get; set; }
     }
 }

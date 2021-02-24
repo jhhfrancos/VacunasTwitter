@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using ProyectoTesisBussiness.BussinessControllers;
 using ProyectoTesisBussiness.MongoBussiness;
 using ProyectoTesisModels.Modelos;
+using ProyectoTesisModels.Modelos.ForceDirectedGraph;
 
 namespace ProyectoTesis.Controllers
 {
@@ -35,6 +37,22 @@ namespace ProyectoTesis.Controllers
             return result;
         }
 
+        [Route("api/getTweet")]
+        [HttpGet]
+        public Tweet GetTweet(string id)
+        {
+            var result = mongoServices.GetTweet(id);
+            return result;
+        }
+
+        [Route("api/getUser")]
+        [HttpGet]
+        public User GetUser(string id)
+        {
+            var result = mongoServices.GetUser(id);
+            return result;
+        }
+
         [Route("api/getNER")]
         [HttpGet]
         public IEnumerable<TableTopics> GetNER(int limit)
@@ -47,7 +65,24 @@ namespace ProyectoTesis.Controllers
         [HttpGet]
         public bool UpdateDB(int limit)
         {
-            mongoServices.UpdateDB();
+            Thread t1 = new Thread(() =>
+            {
+                mongoServices.UpdateDBProfiles();
+            });
+
+            Thread t2 = new Thread(() =>
+            {
+                mongoServices.UpdateDBBase();
+            });
+            t1.Start();
+            t2.Start();
+
+            //wait for t1 to fimish
+            t1.Join();
+
+            //wait for t2 to finish
+            t2.Join();
+
             return true;
         }
 
@@ -60,10 +95,30 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/wordCloud")]
         [HttpGet]
-        public IEnumerable<FrequencyWord> WordCloud(int limit)
+        public IEnumerable<FrequencyWord> WordCloud(int limit, string db = "Tweets_Profiles_Clean")
         {
-            return bussiness.WordCloud(limit);
+            return bussiness.WordCloud(limit, db);
         }
 
+        [Route("api/focesGraph")]
+        [HttpGet]
+        public Graph ForcesGraph(int limit)
+        {
+            return bussiness.ForcesGraph(limit);
+        }
+
+        [Route("api/executeBash")]
+        [HttpGet]
+        public bool ExecuteBash()
+        {
+            return bussiness.ExecuteBash();
+        }
+
+        [Route("api/dbStatistics")]
+        [HttpGet]
+        public Statistics DBStatistics()
+        {
+            return mongoServices.DBStatistics();
+        }
     }
 }

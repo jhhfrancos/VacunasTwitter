@@ -10,15 +10,20 @@ import { BaseService } from 'app/commons/services/base-service.service';
 export class LdaService extends BaseService {
 
   //Result of the transaction word cloud
-  wordCloudSubject$: BehaviorSubject<any> = new BehaviorSubject([]);
+  wordCloudSubjectProfiles$: BehaviorSubject<any> = new BehaviorSubject([]);
   //State of the transaction word cloud
-  loadingWordCloudSubject$ = new BehaviorSubject<boolean>(true);
+  loadingWordCloudSubjectProfiles$ = new BehaviorSubject<boolean>(true);
 
-  constructor( http: HttpClient, @Inject('BASE_URL')  baseUrl: string) { 
-    super(http,baseUrl);
+  //Result of the transaction word cloud
+  wordCloudSubjectBase$: BehaviorSubject<any> = new BehaviorSubject([]);
+  //State of the transaction word cloud
+  loadingWordCloudSubjectBase$ = new BehaviorSubject<boolean>(true);
+
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    super(http, baseUrl);
   }
 
-  getText() : any {
+  getText(): any {
     this.loadingSubject$.next(true);
     let params = new HttpParams();
     params = params.append('limit', "1000");
@@ -28,14 +33,5 @@ export class LdaService extends BaseService {
     }, error => console.error(error));
   }
 
-  getWordCloud() : any {
-    this.loadingWordCloudSubject$.next(false);
-    let params = new HttpParams();
-    params = params.append('limit', "1000");
-    this.http.get<Array<[string, number]>>(this.baseUrl + 'DataSet/api/wordCloud', { params }).subscribe(result => {
-      this.wordCloudSubject$.next(result);
-      this.loadingWordCloudSubject$.next(true);
-      console.log("cambio word");
-    }, error => console.error(error));
-  }
+  
 }

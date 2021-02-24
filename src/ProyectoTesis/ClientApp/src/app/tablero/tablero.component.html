@@ -5,7 +5,7 @@
 
                 <h1>Vacunas Twitter</h1>
 
-                <p>Trbajo de proyecto de grado</p>
+                <p>Trabajo de proyecto de grado</p>
                 <p>Objetivo general</p>
                 <p>
                     Implementar una herramienta computacional para la caracterización de los textos y perfiles de
@@ -47,6 +47,7 @@
                     <li>https://www.sciencedirect.com/science/article/pii/S0004370212000276</li>
                     <li>https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=776698</li>
                     <li>https://www.creative-tim.com/product/material-dashboard-angular2?tracking=first-time#</li>
+                    <li>https://www.codeproject.com/Articles/776698/Spanish-stemmer-in-Csharp</li>
                 </ul>
 
             </div>
@@ -54,51 +55,16 @@
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">content_copy</i>
-                        </div>
-                        <p class="card-category">Used Space</p>
-                        <h3 class="card-title">49/50
-                            <small>GB</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-danger">warning</i>
-                            <a href="javascript:void(0)">Get More Space...</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">store</i>
-                        </div>
-                        <p class="card-category">Revenue</p>
-                        <h3 class="card-title">$34,245</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
                     <div class="card-header card-header-danger card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">info_outline</i>
+                            <i class="fa fa-twitter"></i>
                         </div>
-                        <p class="card-category">Fixed Issues</p>
-                        <h3 class="card-title">75</h3>
+                        <p class="card-category">Total de tweets de perfiles</p>
+                        <h3 class="card-title">{{statistics.totalTweetsProfiles}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">local_offer</i> Tracked from Github
+                            <i class="material-icons">date_range</i>  {{statistics.maxDateProfiles}}
                         </div>
                     </div>
                 </div>
@@ -109,18 +75,52 @@
                         <div class="card-icon">
                             <i class="fa fa-twitter"></i>
                         </div>
-                        <p class="card-category">Followers</p>
-                        <h3 class="card-title">+245</h3>
+                        <p class="card-category">Total de tweets de filtro base</p>
+                        <h3 class="card-title">{{statistics.totalTweetsBase}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">update</i> Just Updated
+                            <i class="material-icons">date_range</i> {{statistics.maxDateBase}}
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">cleaning_services</i>
+                        </div>
+                        <p class="card-category">Total de tweets limpios de filtro base</p>
+                        <h3 class="card-title">{{statistics.totalTweetsCleanBase}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <!-- <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">cleaning_services</i>
+                        </div>
+                        <p class="card-category">Total de tweets limpios de perfiles</p>
+                        <h3 class="card-title">{{statistics.totalTweetsCleanProfiles}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <!-- <div class="stats">
+                            <i class="material-icons">date_range</i> Last 24 Hours
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-4">
                 <div class="card card-chart">
                     <div class="card-header card-header-success">
@@ -507,6 +507,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

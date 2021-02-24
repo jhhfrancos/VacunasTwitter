@@ -2,10 +2,14 @@
   <div class="container-fluid">
     <div class="card">
         <div class="card-header card-header-danger">
-            <h4 class="card-title">Resultados</h4>
+            <h4 class="card-title">Interacciones de la red social</h4>
             <p class="card-category">Resultados</p>
         </div>
         <div class="card-body">
+            <div class="col-md-8" *ngIf="loadingForcesGraph$ | async">
+                <h3>Interacciónes de la red social</h3>
+                <app-force-directed-svg (clickRequest)="clickItem($event)" [data]="graph"></app-force-directed-svg>
+              </div>
             <!-- <div id="typography">
                 <div class="card-title">
                     <h2>Typography</h2>

@@ -30,6 +30,45 @@ namespace ProyectoTesisDataAccess.Repository
             collectionBaseClean = dataContext.getCollection(collectionBaseCleanName);
         }
 
+        public Tweet GetTweet(string id)
+        {
+            var builder = Builders<BsonDocument>.Filter;
+            var ID = Int64.Parse(id);
+            var filter = builder.Eq("id", ID);
+            var document = collectionProfiles.Find(filter).FirstOrDefault();
+            if (document == null) document = collectionBase.Find(filter).FirstOrDefault();
+            var rest = GetFirstTweet();
+            Tweet tweet = BsonSerializer.Deserialize<Tweet>(document);
+            return tweet;
+        }
+
+        public User GetUser(string id)
+        {
+            var builder = Builders<BsonDocument>.Filter;
+            var userID = Int64.Parse(id);
+            var filter = builder.Eq("user.id", userID);
+            var document = collectionProfiles.Find(filter).FirstOrDefault();
+            if (document == null) document = collectionBase.Find(filter).FirstOrDefault();
+            Tweet tweet = BsonSerializer.Deserialize<Tweet>(document);
+            return tweet.user;
+        }
+
+        public Statistics DBStatistics()
+        {
+            var dateBase = BsonSerializer.Deserialize<Tweet>(collectionBase.Find(bson => true).SortByDescending(bson => bson["id"]).Limit(1).FirstOrDefault())?.createdAt;
+            var dateProfiles = BsonSerializer.Deserialize<Tweet>(collectionProfiles.Find(bson => true).SortByDescending(bson => bson["id"]).Limit(1).FirstOrDefault())?.createdAt;
+            Statistics statistics = new Statistics
+            {
+                totalTweetsCleanBase = collectionBaseClean.CountDocuments(new BsonDocument()),
+                totalTweetsBase = collectionBase.CountDocuments(new BsonDocument()),
+                totalTweetsCleanProfiles = collectionProfilesClean.CountDocuments(new BsonDocument()),
+                totalTweetsProfiles = collectionProfiles.CountDocuments(new BsonDocument()),
+                maxDateBase = dateBase,
+                maxDateProfiles = dateProfiles
+            };
+            return statistics;
+        }
+
         public Tweet GetFirstTweet()
         {
             var firstDocument = collectionProfiles.Find(new BsonDocument()).FirstOrDefault();
@@ -56,7 +95,8 @@ namespace ProyectoTesisDataAccess.Repository
             foreach (var item in documents)
             {
                 TweetClean tweet = BsonSerializer.Deserialize<TweetClean>(item);
-                tweets.Add(tweet);
+                if (tweet.value.texto != "" && tweet.value.textoStop != "")
+                    tweets.Add(tweet);
             }
             return tweets;
         }
@@ -69,7 +109,7 @@ namespace ProyectoTesisDataAccess.Repository
                 {
                     var jsonDoc = BsonDocument.Parse(item);
                     var filter = Builders<BsonDocument>.Filter.Eq("id", jsonDoc.GetValue("id"));
-                    var document = (name == "Tweets_Profiles") ? collectionProfiles.Find(filter).FirstOrDefault(): collectionBase.Find(filter).FirstOrDefault();
+                    var document = (name == "Tweets_Profiles") ? collectionProfiles.Find(filter).FirstOrDefault() : collectionBase.Find(filter).FirstOrDefault();
                     if (document == null)
                         if (name == "Tweets_Profiles") collectionProfiles.InsertOne(jsonDoc);
                         else collectionBase.InsertOne(jsonDoc);
@@ -88,7 +128,9 @@ namespace ProyectoTesisDataAccess.Repository
             if (dataContext.CollectionExists(collectionBaseCleanName)) dataContext.DropCollection(collectionBaseCleanName);
             string map = @"
                 function() {
-                    emit({id:this.id, user:this.user.id}, this.text);
+                    var idTw = Number(this.id);
+                    var idUser = Number(this.user.id);
+                    emit({idTweet:idTw, idUser:idUser}, this.text);
                 }";
             /*
              * //Remover URLs

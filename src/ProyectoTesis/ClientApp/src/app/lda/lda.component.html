@@ -32,13 +32,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Grafico de barras</h4>
-                        <p class="card-category"> Ldatent dichiclet allocation</p>
+                        <h4 class="card-title">Arbol de jerarquía</h4>
+                        <p class="card-category">Graficas</p>
                     </div>
                     <div class="card-body">
-                        <app-bar-svg></app-bar-svg>
-                        <div *ngIf="loadingWordCloud$ | async">
-                            <app-word-cloud-svg [inputData]="wordCloudData"></app-word-cloud-svg>
+                        <div class="row">
+                            <!-- <app-bar-svg></app-bar-svg> -->
+                            <div class="col-md-12">
+                                <h3>Tópicos relevantes</h3>
+                                <app-collapsible-tree-svg></app-collapsible-tree-svg>
+                            </div>
                         </div>
                     </div>
                 </div>

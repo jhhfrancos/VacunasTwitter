@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as Chartist from 'chartist';
+import { TableroService } from './tablero.component.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tablero',
@@ -8,7 +10,18 @@ import * as Chartist from 'chartist';
 })
 export class TableroComponent implements OnInit {
 
-  constructor() { }
+  public statistics: any;
+  //Contains all subscription for the component
+  private subscriptions: Subscription[] = [];
+  loading$ = this.tableroService.loadingSubject$.asObservable();
+
+
+  constructor(private tableroService: TableroService) { }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -145,6 +158,15 @@ export class TableroComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+
+
+      //Loading stats
+      this.subscriptions.push(this.tableroService.payload$
+        .subscribe(result => {
+          this.statistics = result;
+        }));
+
+        this.tableroService.getStatistics();
   }
 
 }

@@ -21,6 +21,7 @@ export class AdminLayoutComponent implements OnInit {
   private subscriptions : Subscription[] = [];
   loadingDB$ = this.adminService.loadingSubject$.asObservable();
   loadingCleansingDB$ = this.adminService.loadingCleansingDB$.asObservable();
+  loadingTweets$ = this.adminService.loadingTweets$.asObservable();
 
   constructor( 
       public location: Location, 
@@ -181,5 +182,9 @@ export class AdminLayoutComponent implements OnInit {
   DataCleansingDB(){
       this.adminService.DataCleansingDB();
   }
+
+  DownloadTweets(){
+    this.adminService.DownloadTweets();
+}
 
 }

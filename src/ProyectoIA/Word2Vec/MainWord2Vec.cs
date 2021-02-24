@@ -1,6 +1,7 @@
 ﻿using Catalyst;
 using Catalyst.Models;
 using Mosaik.Core;
+using ProyectoIA.SpanishStemmer;
 using ProyectoTesisModels.Modelos;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,15 @@ namespace ProyectoIA.Word2Vec
 {
     public class MainWord2Vec
     {
+        private Stemmer stemming;
         public MainWord2Vec()
         {
-
+            stemming = new Stemmer();
         }
 
-        public async Task<IEnumerable<FrequencyWord>> Trainning(List<string> stringArray)
+        public async Task<IEnumerable<TokenVector>> Trainning(List<string> stringArray)
         {
-            
+
             List<IDocument> training = new List<IDocument>();
             foreach (var item in stringArray)
             {
@@ -35,15 +37,11 @@ namespace ProyectoIA.Word2Vec
             ft.Data.Loss = FastText.LossType.NegativeSampling;
             //ft.Data.ContextWindow = 2;
             ft.Data.IgnoreCase = true;
-
             ft.Train(nlp.Process(training));
             var vectors = ft.GetVectors();
             //await ft.StoreAsync();
-            
-            return 
-                vectors
-                .GroupBy(t => t.Token, StringComparer.OrdinalIgnoreCase)
-                .Select(t => new FrequencyWord() { word = t.Key, size = t.First().Frequency });
+
+            return vectors;
         }
 
 

@@ -11,6 +11,7 @@ import { BaseService } from 'app/commons/services/base-service.service';
 export class AdminService extends BaseService {
 
   loadingCleansingDB$ = new BehaviorSubject<boolean>(false);
+  loadingTweets$ = new BehaviorSubject<boolean>(false);
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
     super(http,baseUrl);
@@ -33,6 +34,16 @@ export class AdminService extends BaseService {
     this.http.get<String[]>(this.baseUrl + 'DataSet/api/dataCleansing', { params }).subscribe(result => {
       this.payload$.next(result);
       this.loadingCleansingDB$.next(false);
+    }, error => console.error(error));
+  }
+
+  DownloadTweets() : any {
+    this.loadingTweets$.next(true);
+    let params = new HttpParams();
+    params = params.append('limit', "10");
+    this.http.get<String[]>(this.baseUrl + 'DataSet/api/executeBash', { params }).subscribe(result => {
+      this.payload$.next(result);
+      this.loadingTweets$.next(false);
     }, error => console.error(error));
   }
 }

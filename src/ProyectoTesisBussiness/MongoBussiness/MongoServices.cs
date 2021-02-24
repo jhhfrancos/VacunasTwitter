@@ -1,4 +1,5 @@
 ﻿using ProyectoTesisDataAccess.Repository;
+using ProyectoTesisModels.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,11 +15,16 @@ namespace ProyectoTesisBussiness.MongoBussiness
             repository = new TwitterProfilesRepository();
         }
         
-        public bool UpdateDB()
+        public bool UpdateDBProfiles()
         {
-            //var docsProfiles = Extract.GetDocuments();
+            var docsProfiles = Extract.GetDocuments();
+            repository.SaveTweet(docsProfiles);
+            return true;
+        }
+
+        public bool UpdateDBBase()
+        {
             var docsBase = Extract.GetDocumentsBase();
-            //repository.SaveTweet(docsProfiles);
             repository.SaveTweet(docsBase, "Tweets_Base");
             return true;
         }
@@ -29,5 +35,20 @@ namespace ProyectoTesisBussiness.MongoBussiness
             return resultProfiles;
         }
 
+        public Statistics DBStatistics()
+        {
+            var resultProfiles = repository.DBStatistics();
+            return resultProfiles;
+        }
+
+        public Tweet GetTweet(string id)
+        {
+            return repository.GetTweet(id);
+        }
+
+        public User GetUser(string id)
+        {
+            return repository.GetUser(id);
+        }
     }
 }

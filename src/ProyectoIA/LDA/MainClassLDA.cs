@@ -22,6 +22,9 @@ namespace ProyectoIA
         public IEnumerable<IToken> Tokens(string texto)
         {
             FastTokenizer fastTokenizer = new FastTokenizer(Language.Spanish);
+            var doc = new Document(texto, Language.Spanish);
+            fastTokenizer.Process(doc);
+            fastTokenizer.Parse(doc);
             return fastTokenizer.Parse(texto);
         }
 
