@@ -20,7 +20,7 @@
                                     <mat-spinner diameter="20" *ngIf="loading$ | async"></mat-spinner>
                                     <tr *ngFor="let lda of ldas; index as i">
                                         <td>{{ lda.text }}</td>
-                                        <td>{{ lda.topics }}</td>
+                                        <td [innerHTML]="reeplaceNewLineStrings(lda?.topics)"></td>
                                     </tr>
                                 </tbody>
                             </table>

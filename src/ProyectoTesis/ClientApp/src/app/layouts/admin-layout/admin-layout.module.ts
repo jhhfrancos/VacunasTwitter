@@ -7,10 +7,10 @@ import { TableroComponent } from '../../tablero/tablero.component';
 import { NerComponent } from '../../ner/ner.component';
 import { LdaComponent } from '../../lda/lda.component';
 import { ResultsComponent } from '../../results/results.component';
-import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
+//import { IconsComponent } from '../../icons/icons.component';
+//import { MapsComponent } from '../../maps/maps.component';
+//import { NotificationsComponent } from '../../notifications/notifications.component';
+//import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
@@ -19,6 +19,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ComponentsModule} from '../../components/components.module'
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -34,17 +35,18 @@ import {ComponentsModule} from '../../components/components.module'
     MatSelectModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    ComponentsModule
+    ComponentsModule,
+    MatTabsModule
   ],
   declarations: [
     TableroComponent,
     NerComponent,
     LdaComponent,
     ResultsComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
+    //IconsComponent,
+    //MapsComponent,
+    //NotificationsComponent,
+    //UpgradeComponent,
   ],
   
 })

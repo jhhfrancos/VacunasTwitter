@@ -59,6 +59,28 @@ namespace ProyectoTesisBussiness.BussinessControllers
             return returnValue;
         }
 
+        public IEnumerable<TableTopics> GetTweetLDA(string text)
+        {
+            var result = machinneLearnning.LDATest(text);
+            List<TableTopics> returnValue = new List<TableTopics>();
+            int index = 0;
+            foreach (var item in result.Item1)
+            {
+                var tokens = machinneLearnning.Tokens(item);
+                //var vec = machinneLearnning.WordToVec(new List<string>() { item });
+                var dictionary = new TableTopics(item, result.Item2.ElementAt(index), tokens.ToArray());
+                returnValue.Add(dictionary);
+                index++;
+            }
+            return returnValue;
+        }
+
+        public IEnumerable<TableTopics> GetTweetNER(string text)
+        {
+            var result = machinneLearnning.NERTest(text);
+            return result;
+        }
+
         public IEnumerable<TableTopics> NERTweets(int limit)
         {
             var tweet = GetCleanTweets(limit);
@@ -67,7 +89,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
             var result = machinneLearnning.NER(train);
             return result;
             // var resultTextClasification = machinneLearnning.TextClasification(train);
-            
+
         }
 
         public IEnumerable<FrequencyWord> WordCloud(int limit, string db)
@@ -82,13 +104,13 @@ namespace ProyectoTesisBussiness.BussinessControllers
         public Graph ForcesGraph(int limit)
         {
             List<TweetClean> tweet = GetCleanTweets(limit, "Tweets_Base_Clean");
-
-            List<Node> nodesUser = tweet.GroupBy(t => t._id.idUser).Where(t => t.Count() > 2).Select(t => new Node() { id = t.Key.ToString(), group = "1" }).ToList();
+            //TODO: cantidad de relaciones t.Count()
+            List<Node> nodesUser = tweet.GroupBy(t => t._id.idUser).Where(t => t.Count() > 4).Select(t => new Node() { id = t.Key.ToString(), group = "1" }).ToList();
             List<Node> nodesTweets = tweet.Where(t => nodesUser.Any(n => n.id == t._id.idUser.ToString())).Select(t => new Node() { id = t._id.idTweet.ToString(), group = "2" }).ToList();
             List<Node> nodes = nodesUser.Concat(nodesTweets).ToList();
 
-               // tweet.Where(t => nodes.All(n => n.id == t._id.idTweet.ToString() || n.id == t._id.idUser.ToString())).ToList();
-            List<Link> links = tweet.Where(t => nodes.Any(n => n.id == t._id.idTweet.ToString() || n.id == t._id.idUser.ToString())).Select(t => new Link() { source = t._id.idUser.ToString(), target =  t._id.idTweet.ToString(), value = 1 }).ToList();
+            // tweet.Where(t => nodes.All(n => n.id == t._id.idTweet.ToString() || n.id == t._id.idUser.ToString())).ToList();
+            List<Link> links = tweet.Where(t => nodes.Any(n => n.id == t._id.idTweet.ToString() || n.id == t._id.idUser.ToString())).Select(t => new Link() { source = t._id.idUser.ToString(), target = t._id.idTweet.ToString(), value = 1 }).ToList();
 
             Graph grafo = new Graph() { links = links, nodes = nodes };
             return grafo;
@@ -99,6 +121,6 @@ namespace ProyectoTesisBussiness.BussinessControllers
             var result = $" ./twitter4j/auto-search.sh".ExecuteBash();
             return result;
         }
-        
+
     }
 }

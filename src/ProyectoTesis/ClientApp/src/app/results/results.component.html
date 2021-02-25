@@ -1,16 +1,187 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="card">
-        <div class="card-header card-header-danger">
-            <h4 class="card-title">Interacciones de la red social</h4>
-            <p class="card-category">Resultados</p>
-        </div>
-        <div class="card-body">
-            <div class="col-md-8" *ngIf="loadingForcesGraph$ | async">
-                <h3>Interacciónes de la red social</h3>
-                <app-force-directed-svg (clickRequest)="clickItem($event)" [data]="graph"></app-force-directed-svg>
-              </div>
-            <!-- <div id="typography">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Interacciones de la red social</h4>
+                <p class="card-category">Resultados</p>
+            </div>
+            <div class="card-body">
+                <diV class="row">
+                    <div class="col-md-7" *ngIf="loadingForcesGraph$ | async">
+                        <h3>Interacciónes de la red social</h3>
+                        <app-force-directed-svg (clickRequest)="clickItem($event)" [data]="graph">
+                        </app-force-directed-svg>
+                    </div>
+
+                    <div class="col-md-5">
+                        <mat-spinner diameter="200" *ngIf="!(loadingTweetUser$ | async)"></mat-spinner>
+
+                        <mat-tab-group mat-align-tabs="end" [(selectedIndex)]="tabIndex" dynamicHeight>
+                            <mat-tab label="Tweet">
+                                <div class="col-md-12 complete-box">
+
+                                    <div class="row">
+                                        <h3 class="col-md-12">Tweet<span *ngIf="!tweet"> - No encontrado</span></h3>
+                                        <div class="col-md-5">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Creado" value="{{tweet?.createdAt}}"
+                                                    disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de favoritos"
+                                                    value="{{tweet?.favoriteCount}}" disabled>
+
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de retweets"
+                                                    value="{{tweet?.retweetCount}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Texto Tweet</label>
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput placeholder="Texto"
+                                                    disabled>{{tweet?.text}}</textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="tweet?.retweetedStatus">
+                                        <h3 class="col-md-12">Tweet original</h3>
+                                        <div class="col-md-5">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Creado"
+                                                    value="{{tweet.retweetedStatus.createdAt}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de favoritos"
+                                                    value="{{tweet.retweetedStatus.favoriteCount}}" disabled>
+
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de retweets"
+                                                    value="{{tweet.retweetedStatus.retweetCount}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Texto Tweet</label>
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput placeholder="Texto"
+                                                    disabled>{{tweet.retweetedStatus.text}}</textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Usuario">
+
+                                <div class="col-md-12 complete-box">
+                                    <div class="row">
+                                        <h3 class="col-md-12">Usuario<span *ngIf="!user"> - No encontrado</span></h3>
+                                        <div class="col-md-5">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Creado" value="{{user?.createdAt}}"
+                                                    disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de seguidores"
+                                                    value="{{user?.followersCount}}" disabled>
+
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de amigos"
+                                                    value="{{user?.friendsCount}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Descripción</label>
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput placeholder="Texto"
+                                                    disabled>{{user?.description}}</textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cantidad de tweets"
+                                                    value="{{user?.statusesCount}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cuenta verificada"
+                                                    value="{{user?.isVerified}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Cuenta principal"
+                                                    value="{{user?.isDefaultProfile}}" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </mat-tab>
+                            <mat-tab label="Analisis de discurso">
+                                <div class="col-md-12 complete-box">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Texto</th>
+                                                        <th>Tópicos</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <mat-spinner diameter="20" *ngIf="!(loadingTweetUser$ | async)"></mat-spinner>
+                                                    <tr *ngFor="let lda of ldas; index as i">
+                                                        <td>{{ lda?.text }}</td>
+                                                        <td [innerHTML]="reeplaceNewLineStrings(lda?.topics)"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Texto</th>
+                                                        <th>Entidades</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <mat-spinner diameter="20" *ngIf="!(loadingTweetUser$ | async)"></mat-spinner>
+                                                    <tr *ngFor="let item of ners; index as i">
+                                                        <td>{{ item?.text }}</td>
+                                                        <td [innerHTML]="reeplaceNewLineStrings(item?.tokens[0])"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+
+                        </mat-tab-group>
+
+                    </div>
+
+                    <!-- <div id="typography">
                 <div class="card-title">
                     <h2>Typography</h2>
                 </div>
@@ -97,6 +268,7 @@
                     </div>
                 </div>
             </div> -->
+                </diV>
+            </div>
         </div>
     </div>
-</div>

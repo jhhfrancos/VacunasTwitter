@@ -22,7 +22,7 @@
                   <mat-spinner diameter="20" *ngIf="loading$ | async"></mat-spinner>
                   <tr *ngFor="let item of ners; index as i">
                     <td>{{ item.text }}</td>
-                    <td>{{ item.tokens }}</td>
+                    <td [innerHTML]="reeplaceNewLineStrings(item?.tokens[0])"></td>
                   </tr>
                 </tbody>
               </table>

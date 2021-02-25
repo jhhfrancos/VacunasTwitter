@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -16,6 +17,7 @@ import { ForceDirectedSvgComponent } from './d3graphics/force-directed-svg/force
   imports: [
     CommonModule,
     RouterModule,
+    
   ],
   declarations: [
     FooterComponent,
@@ -25,7 +27,7 @@ import { ForceDirectedSvgComponent } from './d3graphics/force-directed-svg/force
     BarSvgComponent,
     WordCloudSvgComponent,
     CollapsibleTreeSvgComponent,
-    ForceDirectedSvgComponent
+    ForceDirectedSvgComponent,
   ],
   exports: [
     FooterComponent,
@@ -35,7 +37,8 @@ import { ForceDirectedSvgComponent } from './d3graphics/force-directed-svg/force
     BarSvgComponent,
     WordCloudSvgComponent,
     CollapsibleTreeSvgComponent,
-    ForceDirectedSvgComponent
+    ForceDirectedSvgComponent,
+    
   ]
 })
 export class ComponentsModule { }

@@ -52,7 +52,7 @@ namespace ProyectoIA
                 {
                     if (lda.TryPredict(doc, out var topics))
                     {
-                        var docTopics = string.Join("\n", topics.Select(t => lda.TryDescribeTopic(t.TopicID, out var td) ? $"[{t.Score:n3}] => {td.ToString()}" : ""));
+                        var docTopics = string.Join("\n", topics.Select(t => lda.TryDescribeTopic(t.TopicID, out var td) ? $"\n [{t.Score:n3}] => {td.ToString()}" : ""));
 
                         lda.TryDescribeTopic(40, out var salida);
 
@@ -72,8 +72,6 @@ namespace ProyectoIA
 
         public async Task<bool> Training(List<string> stringArray)
         {
-            
-
             //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
             Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
 
@@ -87,17 +85,11 @@ namespace ProyectoIA
 
             IDocument[] train = training.ToArray();
 
-
-            
-            //var (train, test) = await Corpus.Reuters.GetAsync();
-
             //Parse the documents using the English pipeline, as the text data is untokenized so far
             var nlp = Pipeline.For(Language.Spanish);
 
             var trainDocs = nlp.Process(train).ToArray();
             
-            
-
             //Train an LDA topic model on the trainind dateset
             using (var lda = new LDA(Language.Spanish, 0, "vacunas-lda"))
             {

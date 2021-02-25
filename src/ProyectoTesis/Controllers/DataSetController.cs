@@ -61,6 +61,22 @@ namespace ProyectoTesis.Controllers
             return result;
         }
 
+        [Route("api/getTweetNER")]
+        [HttpGet]
+        public IEnumerable<TableTopics> GetTweetNER(string text)
+        {
+            var result = bussiness.GetTweetNER(text);
+            return result;
+        }
+
+        [Route("api/getTweetLDA")]
+        [HttpGet]
+        public IEnumerable<TableTopics> GetTweetLDA(string text)
+        {
+            var result = bussiness.GetTweetLDA(text);
+            return result;
+        }
+
         [Route("api/updateDB")]
         [HttpGet]
         public bool UpdateDB(int limit)

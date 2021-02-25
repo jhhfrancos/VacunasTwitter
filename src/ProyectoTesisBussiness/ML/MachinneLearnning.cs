@@ -64,6 +64,18 @@ namespace ProyectoTesisBussiness.ML
             return results;
         }
 
+        public IEnumerable<TableTopics> NERTest(string texto)
+        {
+            var NERResult = NERClass.Testing(texto).Result.ToArray();
+            var results = new List<TableTopics>() { new TableTopics(texto, "",  NERResult)};
+            return results;
+        }
+        public (List<string>, List<string>) LDATest(string text)
+        {
+            return LDAClass.Testing(new List<string>() { text }).Result; ;
+        }
+
+
         public (List<string>, List<string>) TextClasification(List<string> trainSet)
         {
             var result = textClasification.Entrenamiento(trainSet).Result;

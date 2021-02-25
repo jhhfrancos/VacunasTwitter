@@ -86,13 +86,37 @@ namespace ProyectoIA.NER
             PrintDocumentEntities(doc2);*/
         }
 
-        
-        private string PrintDocumentEntities(IDocument doc)
+        public async Task<IEnumerable<string>> Testing(string text)
+        {
+            //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
+            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models"));
+
+            //Create a new pipeline for the english language, and add the WikiNER model to it
+            Console.WriteLine("Loading models... This might take a bit longer the first time you run this sample, as the models have to be downloaded from the online repository");
+            var nlp = await Pipeline.ForAsync(Language.Spanish);
+            nlp.Add(await AveragePerceptronEntityRecognizer.FromStoreAsync(language: Language.Spanish, version: Version.Latest, tag: "WikiNER"));
+            //For processing a multiple documents in parallel (i.e. multithreading), you can call nlp.Process on an IEnumerable<IDocument> enumerable
+            Document doc = new Document(text,Language.Spanish);
+            var docs = nlp.Process(new List<Document>() { doc });
+
+            //This will print all recognized entities. You can also see how the WikiNER model makes a mistake on recognizing Amazon as a location on Data.Sample_1
+
+            List<string> result = new List<string>();
+            foreach (var d in docs)
+            {
+                result.Add(PrintDocumentEntities(d));
+            }
+
+            return result;
+        }
+
+
+            private string PrintDocumentEntities(IDocument doc)
         {
             var value = doc.Value;
             var tokens = doc.TokenizedValue(mergeEntities: true);
-            var entities = string.Join("\n", doc.SelectMany(span => span.GetCapturedTokens()).Select(e => $"\t{e.Value} [{e.POS}]"));
-            return $"Input text:\n\t'{value}'\n\nTokenized Value:\n\t'{tokens}'\n\nEntities: \n{entities}";
+            var entities = string.Join("\n", doc.SelectMany(span => span.GetCapturedTokens()).Select(e => $"\t {e.Value} [{e.POS}] "));
+            return $"{entities}";//$"Texto:\n\t'{value}'\n\nTokens:\n\t'{tokens}'\n\nEntidades: \n{entities}";
         }
 
     }

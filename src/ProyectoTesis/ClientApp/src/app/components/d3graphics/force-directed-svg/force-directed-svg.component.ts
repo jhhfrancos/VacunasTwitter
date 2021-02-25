@@ -2816,7 +2816,7 @@ export class ForceDirectedSvgComponent implements OnInit {
 
 
     const clickReq: EventEmitter<Node> = this.clickRequest;
-    
+
     const svg = d3.select('#directed');
     const width = +svg.attr('width');
     const height = +svg.attr('height');
@@ -2826,7 +2826,7 @@ export class ForceDirectedSvgComponent implements OnInit {
     const nodes: Node[] = [];
     const links: Link[] = [];
 
-    
+
     this.data.nodes.forEach((d) => {
       nodes.push(<Node>d);
     });
@@ -2918,9 +2918,12 @@ export class ForceDirectedSvgComponent implements OnInit {
       d.fy = null;
     }
 
-    function clickNode(event, d){
+    function clickNode(event, selected) {
       console.log("clickNode");
-      clickReq.emit(d);
+      svg.selectAll('circle').attr('fill', (d: any) =>
+        (d.id != selected.id) ? color(d.group) : "#FFFFF"
+      );
+      clickReq.emit(selected);
     }
   }
 

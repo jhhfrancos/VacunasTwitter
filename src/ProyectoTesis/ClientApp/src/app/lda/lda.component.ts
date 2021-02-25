@@ -35,5 +35,8 @@ export class LdaComponent implements OnInit {
   }
 
 
+  reeplaceNewLineStrings(text: string): string {
+    return text.replace(/\n/gi, "<br>") || "";
+  }
 
 }

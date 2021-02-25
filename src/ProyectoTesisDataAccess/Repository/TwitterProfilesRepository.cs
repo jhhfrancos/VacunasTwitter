@@ -33,12 +33,12 @@ namespace ProyectoTesisDataAccess.Repository
         public Tweet GetTweet(string id)
         {
             var builder = Builders<BsonDocument>.Filter;
-            var ID = Int64.Parse(id);
-            var filter = builder.Eq("id", ID);
-            var document = collectionProfiles.Find(filter).FirstOrDefault();
-            if (document == null) document = collectionBase.Find(filter).FirstOrDefault();
-            var rest = GetFirstTweet();
-            Tweet tweet = BsonSerializer.Deserialize<Tweet>(document);
+
+            var ID = Int64.Parse(id);//jsonDoc.GetValue("id");
+            var filter = Builders<BsonDocument>.Filter.Eq("id", ID);
+
+            var document = collectionProfiles.Find(filter).FirstOrDefault() ?? collectionBase.Find(filter).FirstOrDefault();
+            Tweet tweet = (document != null)? BsonSerializer.Deserialize<Tweet>(document):null;
             return tweet;
         }
 
@@ -47,10 +47,10 @@ namespace ProyectoTesisDataAccess.Repository
             var builder = Builders<BsonDocument>.Filter;
             var userID = Int64.Parse(id);
             var filter = builder.Eq("user.id", userID);
-            var document = collectionProfiles.Find(filter).FirstOrDefault();
-            if (document == null) document = collectionBase.Find(filter).FirstOrDefault();
-            Tweet tweet = BsonSerializer.Deserialize<Tweet>(document);
-            return tweet.user;
+            var document = collectionProfiles.Find(filter).FirstOrDefault() ?? collectionBase.Find(filter).FirstOrDefault();
+            
+            Tweet tweet = (document != null)? BsonSerializer.Deserialize<Tweet>(document):null;
+            return tweet?.user;
         }
 
         public Statistics DBStatistics()

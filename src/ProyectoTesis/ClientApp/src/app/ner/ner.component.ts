@@ -55,5 +55,10 @@ export class NerComponent implements OnInit, OnDestroy {
 
   }
 
+  
+  reeplaceNewLineStrings(text: string): string {
+    return text.replace(/\n/gi, "<br>") || "";
+  }
+
 
 }
