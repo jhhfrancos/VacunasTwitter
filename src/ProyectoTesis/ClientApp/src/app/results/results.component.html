@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="col-md-5">
-                        <mat-spinner diameter="200" *ngIf="!(loadingTweetUser$ | async)"></mat-spinner>
+                        <mat-spinner diameter="20" *ngIf="!(loadingTweetUser$ | async)"></mat-spinner>
 
                         <mat-tab-group mat-align-tabs="end" [(selectedIndex)]="tabIndex" dynamicHeight>
                             <mat-tab label="Tweet">
@@ -141,8 +141,8 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Texto</th>
-                                                        <th>Tópicos</th>
+                                                        <th  width ="40%">Texto</th>
+                                                        <th  width ="60%">Tópicos</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -160,12 +160,12 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Texto</th>
-                                                        <th>Entidades</th>
+                                                        <th  width ="40%">Texto</th>
+                                                        <th  width ="60%">Entidades</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <mat-spinner diameter="20" *ngIf="!(loadingTweetUser$ | async)"></mat-spinner>
+                                                    <mat-spinner diameter="20" *ngIf="!(loadingTweetUser$ | async)" ></mat-spinner>
                                                     <tr *ngFor="let item of ners; index as i">
                                                         <td>{{ item?.text }}</td>
                                                         <td [innerHTML]="reeplaceNewLineStrings(item?.tokens[0])"></td>
