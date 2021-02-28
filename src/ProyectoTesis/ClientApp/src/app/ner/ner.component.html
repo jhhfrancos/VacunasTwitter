@@ -1,5 +1,35 @@
 <div class="main-content">
   <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">BOW</h4>
+            <p class="card-category"> Bolsa de palabras</p>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-6" *ngIf="loadingWordCloudProfiles$ | async">
+                  <h2>Word cloud perfiles</h2>
+                  <app-word-cloud-svg [inputData]="wordCloudDataProfiles"></app-word-cloud-svg>
+                </div>
+
+                <div class="col-md-6" *ngIf="loadingWordCloudBase$ | async">
+                  <h2>Word cloud base</h2>
+                  <app-word-cloud-svg [inputData]="wordCloudDataBase"></app-word-cloud-svg>
+                </div>
+
+              </div>
+              <!-- <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button> -->
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
     <div class="row">
 
       <div class="col-md-8">
@@ -14,8 +44,8 @@
               <table class="table">
                 <thead class=" text-primary">
                   <tr>
-                    <th width ="40%">Texto</th>
-                    <th width ="60%">Tokens</th>
+                    <th width="40%">Texto</th>
+                    <th width="60%">Tokens</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -307,35 +337,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title ">BOW</h4>
-            <p class="card-category"> Bolsa de palabras</p>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="row">
-                <div class="col-md-6" *ngIf="loadingWordCloudProfiles$ | async">
-                  <h2>Word cloud perfiles</h2>
-                  <app-word-cloud-svg [inputData]="wordCloudDataProfiles"></app-word-cloud-svg>
-                </div>
-
-                <div class="col-md-6" *ngIf="loadingWordCloudBase$ | async">
-                  <h2>Word cloud base</h2>
-                  <app-word-cloud-svg [inputData]="wordCloudDataBase"></app-word-cloud-svg>
-                </div>
-
-              </div>
-              <!-- <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button> -->
-              <div class="clearfix"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

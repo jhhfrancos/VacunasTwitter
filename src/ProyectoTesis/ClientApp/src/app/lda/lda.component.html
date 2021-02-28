@@ -4,16 +4,39 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
+                        <h4 class="card-title">Arbol de jerarquía</h4>
+                        <p class="card-category">Graficas</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- <app-bar-svg></app-bar-svg> -->
+                            <div class="col-md-12">
+                                <h3>Tópicos relevantes</h3>
+                                <mat-spinner diameter="20" *ngIf="!(loadingLdaTree$ | async)"></mat-spinner>
+                                <div class="col-md-12" *ngIf="loadingLdaTree$ | async">
+                                    <app-collapsible-tree-svg [data]="ldaTree" (clickRequest)="clickItem($event)"></app-collapsible-tree-svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
                         <h4 class="card-title ">LDA</h4>
                         <p class="card-category"> Ldatent dichiclet allocation</p>
                     </div>
                     <div class="card-body">
+                        <button [disabled]="loadingTrainningLda$ | async" class="btn btn-info btn-block btn-fill" (click)="TrainningLDA()">
+                            Entrenar LDA <mat-spinner diameter="15" *ngIf="loadingTrainningLda$ | async"></mat-spinner> 
+                        </button> 
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th width ="40%">Texto</th>
-                                        <th width ="60%">Tópicos</th>
+                                        <th width="40%">Texto</th>
+                                        <th width="60%">Tópicos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -29,23 +52,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Arbol de jerarquía</h4>
-                        <p class="card-category">Graficas</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <!-- <app-bar-svg></app-bar-svg> -->
-                            <div class="col-md-12">
-                                <h3>Tópicos relevantes</h3>
-                                <app-collapsible-tree-svg></app-collapsible-tree-svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- <div class="col-md-12">
                 <div class="card card-plain">

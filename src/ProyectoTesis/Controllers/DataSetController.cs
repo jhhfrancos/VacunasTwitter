@@ -29,11 +29,19 @@ namespace ProyectoTesis.Controllers
             configuration = _iConfig;
         }
 
-        [Route("api/getLDA")]
+        [Route("api/getTrainLDA")]
         [HttpGet]
-        public IEnumerable<TableTopics> GetLDA(int limit)
+        public bool GetTrainLDA(int limit)
         {
-            var result = bussiness.LDATweets(limit);
+            var result = bussiness.LDATrainTweets(limit);
+            return result;
+        }
+
+        [Route("api/getTestResultLDA")]
+        [HttpGet]
+        public IEnumerable<TableTopics> GetTestResultLDA(int limit)
+        {
+            var result = bussiness.LDATestResultTweets(limit);
             return result;
         }
 

@@ -38,12 +38,22 @@ namespace ProyectoTesisBussiness.BussinessControllers
         }
 
 
-        public IEnumerable<TableTopics> LDATweets(int limit)
+        public bool LDATrainTweets(int limit)
         {
             var tweet = GetCleanTweets(limit);
             //var train = GetTweets(2000).Select(t => t.text).ToList();
             var train = tweet.Select(t => t.value.textoStop).ToList();
-            var result = machinneLearnning.LDAAsync(train);
+            var result = machinneLearnning.LDATrainAsync(train);
+            return result;
+        }
+
+
+        public IEnumerable<TableTopics> LDATestResultTweets(int limit)
+        {
+            var tweet = GetCleanTweets(limit);
+            //var train = GetTweets(2000).Select(t => t.text).ToList();
+            var train = tweet.Select(t => t.value.textoStop).ToList();
+            var result = machinneLearnning.LDATestResultAsync(train);
             // var resultTextClasification = machinneLearnning.TextClasification(train);
             List<TableTopics> returnValue = new List<TableTopics>();
             int index = 0;
@@ -58,7 +68,6 @@ namespace ProyectoTesisBussiness.BussinessControllers
             }
             return returnValue;
         }
-
         public IEnumerable<TableTopics> GetTweetLDA(string text)
         {
             var result = machinneLearnning.LDATest(text);

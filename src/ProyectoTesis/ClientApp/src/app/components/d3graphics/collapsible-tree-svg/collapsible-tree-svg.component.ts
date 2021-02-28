@@ -1,16 +1,13 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { identifierModuleUrl } from '@angular/compiler';
+import { Component, ViewChild, ElementRef, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import * as d3 from "d3";
 import { HierarchyNode, TreeLayout } from 'd3';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { threadId } from 'worker_threads';
+import { HierarchyDatum } from '../../../commons/models/tree-chart/HierarchyDatum.interface'
 
-interface HierarchyDatum {
-  name: string;
-  value?: number;
-  children?: Array<HierarchyDatum>;
-  x0?: number;
-  y0?: number;
-}
 
+/*
 const data: HierarchyDatum = {
   "name": "vacunas",
   "children": [
@@ -60,20 +57,24 @@ const data: HierarchyDatum = {
       ]
     }
   ]
-};
+};*/
 @Component({
   selector: 'app-collapsible-tree-svg',
   templateUrl: './collapsible-tree-svg.component.html',
   styleUrls: ['./collapsible-tree-svg.component.css']
 })
-export class CollapsibleTreeSvgComponent implements OnInit {
+export class CollapsibleTreeSvgComponent implements OnInit, OnChanges {
 
   title = 'd3tree';
   @ViewChild('chart', { static: true }) private chartContainer: ElementRef;
-
+  @Input() data: HierarchyDatum;//BehaviorSubject<HierarchyDatum>;
+  @Output() clickRequest = new EventEmitter<any>();
 
   root: any;
   tree: TreeLayout<HierarchyDatum>;
+
+  //data: HierarchyDatum;
+  //datumSubscription: Observable<HierarchyDatum>;
 
   svg: any;
 
@@ -89,7 +90,7 @@ export class CollapsibleTreeSvgComponent implements OnInit {
   nodeHeight: number = 5;
   nodeRadius: number = 5;
   horizontalSeparationBetweenNodes: number = 5;
-  verticalSeparationBetweenNodes: number = 5;
+  verticalSeparationBetweenNodes: number = 30;
   nodeTextDistanceY: string = "-5px";
   nodeTextDistanceX: number = 5;
 
@@ -106,6 +107,19 @@ export class CollapsibleTreeSvgComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.datumSubscription = this.datumSubject.asObservable();
+    // this.datumSubscription.subscribe(data => {
+    //   this.data = data;
+    //   this.buildData(this.data);
+    // });
+    //this.renderTreeChart();
+  }
+  ngOnChanges(changes: SimpleChanges){
+    //this.renderTreeChart();
+    this.data = changes.data.currentValue
+    let element: any = this.chartContainer.nativeElement;
+    d3.select(element).select("svg").remove();
+    //this.buildData(this.data);
     this.renderTreeChart();
   }
 
@@ -130,13 +144,8 @@ export class CollapsibleTreeSvgComponent implements OnInit {
     this.tree = d3.tree<HierarchyDatum>()
       .size([this.height, this.width])
       .nodeSize([this.nodeWidth + this.horizontalSeparationBetweenNodes, this.nodeHeight + this.verticalSeparationBetweenNodes])
-      //.separation((a, b) => { return a.parent == b.parent ? 2 : 4 })
+      .separation((a, b) => { return a.parent == b.parent ? 2 : 4 })
       ;
-
-    // Assigns parent, children, height, depth
-    this.root = d3.hierarchy<HierarchyDatum>(data, (d) => { return d.children; });
-    this.root.x0 = this.height / 2;
-    this.root.y0 = 10;
 
     this.heightSubscription.subscribe(data => {
 
@@ -147,15 +156,15 @@ export class CollapsibleTreeSvgComponent implements OnInit {
       let element: any = this.chartContainer.nativeElement;
       d3.select(element).select('svg')
         // .attr("viewBox", `0,${-data/2},${element.offsetWidth},${data/2}`)
-        .attr('height', data + this.margin.top + this.margin.bottom )
+        .attr('height', data + this.margin.top + this.margin.bottom)
         .select("g")
         .attr('transform', 'translate(' + this.margin.left + ',' + data / 2 + ')');
     });
 
-    //Collapse after the second level
-    this.root.children.forEach(collapse);
+    this.buildData(this.data);
 
-    this.updateChart(this.root);
+    //Collapse after the second level
+    //this.root.children.forEach(collapse);
 
     function collapse(d) {
       if (d.children) {
@@ -167,8 +176,21 @@ export class CollapsibleTreeSvgComponent implements OnInit {
 
   }
 
+  buildData(source) {
+    // Assigns parent, children, height, depth
+    this.root = d3.hierarchy<HierarchyDatum>(source, (d) => { return d.children; });
+    this.root.x0 = this.height / 2;
+    this.root.y0 = 10;
+
+    this.updateChart(this.root);
+  }
+
   click = (d) => {
-    console.log('click');
+    console.log("click emit" + this.data);
+    if (!(d._children || d.children)) {
+      this.clickRequest.emit(d);
+      return;
+    }
     if (d.children) {
       d._children = d.children;
       d.children = null;
@@ -204,7 +226,7 @@ export class CollapsibleTreeSvgComponent implements OnInit {
 
     nodeEnter.append('circle')
       .attr('class', 'node')
-      .attr('r', 2.5)
+      .attr('r', 5)
       .style('fill', (d) => {
         return d._children ? "#555" : "#999";
       })

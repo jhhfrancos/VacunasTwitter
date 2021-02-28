@@ -8,6 +8,7 @@ using Catalyst.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Mosaik.Core;
+using static Catalyst.Models.LDA;
 
 namespace ProyectoIA
 {
@@ -30,14 +31,16 @@ namespace ProyectoIA
 
         public async Task<(List<string>, List<string>)> Testing(List<string> stringArray)
         {
+            //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
+            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
             ///////////-------------
             List<IDocument> testing = new List<IDocument>();
             foreach (var item in stringArray)
             {
                 //var newItem = Utils.Utils.DeleteStopWords(item);
-                testing.Add(new Document(item,Language.Spanish));
+                testing.Add(new Document(item, Language.Spanish));
             }
-            
+
             IDocument[] test = testing.ToArray();
 
             //Parse the documents using the English pipeline, as the text data is untokenized so far
@@ -50,6 +53,7 @@ namespace ProyectoIA
             {
                 foreach (var doc in testDocs)
                 {
+
                     if (lda.TryPredict(doc, out var topics))
                     {
                         var docTopics = string.Join("\n", topics.Select(t => lda.TryDescribeTopic(t.TopicID, out var td) ? $"\n [{t.Score:n3}] => {td.ToString()}" : ""));
@@ -66,8 +70,28 @@ namespace ProyectoIA
                     }
                 }
             }
-
+            var topicos2 = GetTopics();
             return (values, topicos);
+        }
+
+        public async Task<List<LDATopicDescription>> GetTopics()
+        {
+            //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
+            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
+
+            using (var lda = await LDA.FromStoreAsync(Language.Spanish, 0, "vacunas-lda"))
+            {
+                var numTopics = lda.Data.NumberOfTopics;
+                var topics = new List<LDATopicDescription>();
+                for (int i = 0; i < numTopics; i++)
+                {
+                    lda.TryDescribeTopic(i, out var salida);
+                    topics.Add(salida);
+                }
+
+                return topics;
+            }
+
         }
 
         public async Task<bool> Training(List<string> stringArray)
@@ -89,11 +113,12 @@ namespace ProyectoIA
             var nlp = Pipeline.For(Language.Spanish);
 
             var trainDocs = nlp.Process(train).ToArray();
-            
+
             //Train an LDA topic model on the trainind dateset
             using (var lda = new LDA(Language.Spanish, 0, "vacunas-lda"))
             {
                 lda.Data.NumberOfTopics = 100; //Arbitrary number of topics
+                lda.Data.NumberOfSummaryTermsPerTopic = 4; //Arbitrary number of topics
                 lda.Train(trainDocs, Environment.ProcessorCount);
 
                 await lda.StoreAsync();
