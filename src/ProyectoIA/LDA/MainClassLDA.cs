@@ -94,7 +94,7 @@ namespace ProyectoIA
 
         }
 
-        public async Task<bool> Training(List<string> stringArray)
+        public async Task<bool> Training(List<string> stringArray, int numTopics, int NumOfTerms)
         {
             //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
             Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
@@ -117,8 +117,8 @@ namespace ProyectoIA
             //Train an LDA topic model on the trainind dateset
             using (var lda = new LDA(Language.Spanish, 0, "vacunas-lda"))
             {
-                lda.Data.NumberOfTopics = 100; //Arbitrary number of topics
-                lda.Data.NumberOfSummaryTermsPerTopic = 4; //Arbitrary number of topics
+                lda.Data.NumberOfTopics = numTopics; //Arbitrary number of topics
+                lda.Data.NumberOfSummaryTermsPerTopic = NumOfTerms; //Arbitrary number of topics
                 lda.Train(trainDocs, Environment.ProcessorCount);
 
                 await lda.StoreAsync();

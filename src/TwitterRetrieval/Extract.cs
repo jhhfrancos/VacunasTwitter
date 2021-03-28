@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace TwitterRetrieval
@@ -19,7 +20,7 @@ namespace TwitterRetrieval
                 ".//twitter4j/data";
 
                 var files = from file in Directory.EnumerateFiles(docPath, "*", SearchOption.AllDirectories)
-                            from line in File.ReadLines(file)
+                            from line in File.ReadLines(file, Encoding.UTF7)
                             select new
                             {
                                 File = file,
@@ -54,7 +55,7 @@ namespace TwitterRetrieval
                 string docPath =
                 ".//twitter4j/listAll.txt";
 
-                var files = from line in File.ReadLines(docPath)
+                var files = from line in File.ReadLines(docPath, Encoding.UTF7)
                             select new
                             {
                                 Line = line

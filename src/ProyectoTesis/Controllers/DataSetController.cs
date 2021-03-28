@@ -31,9 +31,9 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/getTrainLDA")]
         [HttpGet]
-        public bool GetTrainLDA(int limit)
+        public bool GetTrainLDA(int limit, int numTopics = 100, int NumOfTerms = 10)
         {
-            var result = bussiness.LDATrainTweets(limit);
+            var result = bussiness.LDATrainTweets(limit, numTopics, NumOfTerms);
             return result;
         }
 
@@ -63,17 +63,25 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/getNER")]
         [HttpGet]
-        public IEnumerable<TableTopics> GetNER(int limit)
+        public bool GetNER(int limit)
         {
-            var result = bussiness.NERTweets(limit);
+            var result = bussiness.NERTrainTweets(limit);
             return result;
         }
 
         [Route("api/getTweetNER")]
         [HttpGet]
-        public IEnumerable<TableTopics> GetTweetNER(string text)
+        public TableTopics GetTweetNER(string text)
         {
             var result = bussiness.GetTweetNER(text);
+            return result;
+        }
+
+        [Route("api/getTestResultNER")]
+        [HttpGet]
+        public IEnumerable<TableTopics> GetTestResultNER(int limit)
+        {
+            var result = bussiness.NERTestResultTweets(limit);
             return result;
         }
 
@@ -126,9 +134,9 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/focesGraph")]
         [HttpGet]
-        public Graph ForcesGraph(int limit)
+        public Graph ForcesGraph(int limit, string db = "Tweets_Base_Clean")
         {
-            return bussiness.ForcesGraph(limit);
+            return bussiness.ForcesGraph(limit, db);
         }
 
         [Route("api/executeBash")]

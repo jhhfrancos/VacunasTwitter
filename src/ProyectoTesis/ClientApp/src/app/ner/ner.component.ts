@@ -15,6 +15,7 @@ export class NerComponent implements OnInit, OnDestroy {
   //Contains all subscription for the component
   private subscriptions: Subscription[] = [];
   loading$ = this.nerService.loadingSubject$.asObservable();
+  loadingTrainningNer$ = this.nerService.loadingTrainSubject$.asObservable();
 
   //Words clouds
   loadingWordCloudProfiles$ = this.nerService.loadingWordCloudSubjectProfiles$.asObservable();
@@ -48,6 +49,11 @@ export class NerComponent implements OnInit, OnDestroy {
         this.wordCloudDataBase = result;
       }));
 
+    this.subscriptions.push(this.nerService.resutlTrain$
+      .subscribe(result => {
+        this.nerService.getText();
+      }));
+
     this.nerService.getWordCloud("Tweets_Profiles_Clean");
     this.nerService.getWordCloud("Tweets_Base_Clean");
 
@@ -55,10 +61,13 @@ export class NerComponent implements OnInit, OnDestroy {
 
   }
 
-  
+
   reeplaceNewLineStrings(text: string): string {
-    return text.replace(/\n/gi, "<br>") || "";
+    return text?.replace(/\n/gi, "<br>") || "";
   }
 
+  TrainningNER(){
+    this.nerService.getTrain();
+  }
 
 }

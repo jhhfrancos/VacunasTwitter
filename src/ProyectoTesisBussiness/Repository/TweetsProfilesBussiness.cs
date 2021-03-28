@@ -38,29 +38,26 @@ namespace ProyectoTesisBussiness.BussinessControllers
         }
 
 
-        public bool LDATrainTweets(int limit)
+        public bool LDATrainTweets(int limit, int numTopics, int NumOfTerms)
         {
             var tweet = GetCleanTweets(limit);
             //var train = GetTweets(2000).Select(t => t.text).ToList();
             var train = tweet.Select(t => t.value.textoStop).ToList();
-            var result = machinneLearnning.LDATrainAsync(train);
+            var result = machinneLearnning.LDATrainAsync(train,numTopics,NumOfTerms);
             return result;
         }
 
 
         public IEnumerable<TableTopics> LDATestResultTweets(int limit)
         {
-            var tweet = GetCleanTweets(limit);
-            //var train = GetTweets(2000).Select(t => t.text).ToList();
-            var train = tweet.Select(t => t.value.textoStop).ToList();
-            var result = machinneLearnning.LDATestResultAsync(train);
-            // var resultTextClasification = machinneLearnning.TextClasification(train);
+            var tweet = GetCleanTweets(limit, "Tweets_Base_Clean");
+            var test = tweet.Select(t => t.value.textoStop).ToList();
+            var result = machinneLearnning.LDATestResultAsync(test);
             List<TableTopics> returnValue = new List<TableTopics>();
             int index = 0;
             foreach (var item in result.Item1)
             {
                 var tokens = machinneLearnning.Tokens(item);
-                //var vec = machinneLearnning.WordToVec(new List<string>() { item });
                 var dictionary = new TableTopics(item, result.Item2.ElementAt(index), tokens.ToArray());
 
                 returnValue.Add(dictionary);
@@ -84,20 +81,26 @@ namespace ProyectoTesisBussiness.BussinessControllers
             return returnValue;
         }
 
-        public IEnumerable<TableTopics> GetTweetNER(string text)
+        public TableTopics GetTweetNER(string text)
         {
             var result = machinneLearnning.NERTest(text);
             return result;
         }
 
-        public IEnumerable<TableTopics> NERTweets(int limit)
+        public bool NERTrainTweets(int limit)
         {
             var tweet = GetCleanTweets(limit);
-            //var train = GetTweets(2000).Select(t => t.text).ToList();
             var train = tweet.Select(t => t.value.texto).ToList();
             var result = machinneLearnning.NER(train);
             return result;
-            // var resultTextClasification = machinneLearnning.TextClasification(train);
+
+        }
+
+        public IEnumerable<TableTopics> NERTestResultTweets(int limit)
+        {
+            var tweets = GetCleanTweets(limit, "Tweets_Base_clean");
+            var test= tweets.Select(t => machinneLearnning.NERTest(t.value.texto));
+            return test.ToList();
 
         }
 
@@ -110,9 +113,9 @@ namespace ProyectoTesisBussiness.BussinessControllers
             return vec;
         }
 
-        public Graph ForcesGraph(int limit)
+        public Graph ForcesGraph(int limit, string db)
         {
-            List<TweetClean> tweet = GetCleanTweets(limit, "Tweets_Base_Clean");
+            List<TweetClean> tweet = GetCleanTweets(limit, db);
             //TODO: cantidad de relaciones t.Count()
             List<Node> nodesUser = tweet.GroupBy(t => t._id.idUser).Where(t => t.Count() > 4).Select(t => new Node() { id = t.Key.ToString(), group = "1" }).ToList();
             List<Node> nodesTweets = tweet.Where(t => nodesUser.Any(n => n.id == t._id.idUser.ToString())).Select(t => new Node() { id = t._id.idTweet.ToString(), group = "2" }).ToList();

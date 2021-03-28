@@ -39,6 +39,10 @@
             <p class="card-category"> Ejemplo resultados tabulares</p>
           </div>
           <div class="card-body">
+            <button [disabled]="loadingTrainningNer$ | async" class="btn btn-info btn-block btn-fill"
+              (click)="TrainningNER()">
+              Entrenar NER <mat-spinner diameter="15" *ngIf="loadingTrainningNer$ | async"></mat-spinner>
+            </button>
             <div class="table-responsive">
 
               <table class="table">

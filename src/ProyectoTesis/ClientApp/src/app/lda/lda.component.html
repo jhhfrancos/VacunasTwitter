@@ -11,10 +11,14 @@
                         <div class="row">
                             <!-- <app-bar-svg></app-bar-svg> -->
                             <div class="col-md-12">
-                                <h3>Tópicos relevantes</h3>
+                                <h3>Tópicos por texto</h3>
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Ingresar texto" type="text" [(ngModel)]="text" (blur)="inputChange($event)">
+                                </mat-form-field>
                                 <mat-spinner diameter="20" *ngIf="!(loadingLdaTree$ | async)"></mat-spinner>
                                 <div class="col-md-12" *ngIf="loadingLdaTree$ | async">
-                                    <app-collapsible-tree-svg [data]="ldaTree" (clickRequest)="clickItem($event)"></app-collapsible-tree-svg>
+                                    <app-collapsible-tree-svg [data]="ldaTree" (clickRequest)="clickItem($event)">
+                                    </app-collapsible-tree-svg> 
                                 </div>
                             </div>
                         </div>
@@ -28,9 +32,10 @@
                         <p class="card-category"> Ldatent dichiclet allocation</p>
                     </div>
                     <div class="card-body">
-                        <button [disabled]="loadingTrainningLda$ | async" class="btn btn-info btn-block btn-fill" (click)="TrainningLDA()">
-                            Entrenar LDA <mat-spinner diameter="15" *ngIf="loadingTrainningLda$ | async"></mat-spinner> 
-                        </button> 
+                        <button [disabled]="loadingTrainningLda$ | async" class="btn btn-info btn-block btn-fill"
+                            (click)="TrainningLDA()">
+                            Entrenar LDA <mat-spinner diameter="15" *ngIf="loadingTrainningLda$ | async"></mat-spinner>
+                        </button>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

@@ -57,6 +57,8 @@ export class LdaService extends BaseService {
     this.loadingTrainnginLdaSubject$.next(true);
     let params = new HttpParams();
     params = params.append('limit', countTrainning);
+    params = params.append('numTopics', "300");
+    params = params.append('NumOfTerms', "7");
     this.http.get<String[]>(this.baseUrl + 'DataSet/api/getTrainLDA', { params }).subscribe(result => {
       this.trainnginLdaSubject$.next(result);
       this.loadingTrainnginLdaSubject$.next(false);

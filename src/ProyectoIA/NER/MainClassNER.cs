@@ -47,10 +47,10 @@ namespace ProyectoIA.NER
             //Adds a custom pattern spotter for the pattern: single("is" / VERB) + multiple(NOUN/AUX/PROPN/AUX/DET/ADJ)
             var isApattern = new PatternSpotter(Language.Spanish, 0, tag: "is-a-pattern", captureTag: "IsA");
             isApattern.NewPattern(
-                "Es+Noun",
+                "Aux+Verb",
                 mp => mp.Add(
-                    new PatternUnit(P.Single().WithToken("es").WithPOS(PartOfSpeech.VERB)),
-                    new PatternUnit(P.Multiple().WithPOS(PartOfSpeech.NOUN, PartOfSpeech.PROPN, PartOfSpeech.AUX, PartOfSpeech.DET, PartOfSpeech.ADJ))
+                    new PatternUnit(P.Single().WithToken("es").WithPOS(PartOfSpeech.AUX)),
+                    new PatternUnit(P.Multiple().WithPOS(PartOfSpeech.NOUN, PartOfSpeech.PROPN, PartOfSpeech.ADJ, PartOfSpeech.VERB))
             ));
             nlp.Add(isApattern);
 
@@ -96,6 +96,16 @@ namespace ProyectoIA.NER
             var nlp = await Pipeline.ForAsync(Language.Spanish);
             nlp.Add(await AveragePerceptronEntityRecognizer.FromStoreAsync(language: Language.Spanish, version: Version.Latest, tag: "WikiNER"));
             //For processing a multiple documents in parallel (i.e. multithreading), you can call nlp.Process on an IEnumerable<IDocument> enumerable
+
+            var isApattern = new PatternSpotter(Language.Spanish, 0, tag: "is-a-pattern", captureTag: "IsA");
+            isApattern.NewPattern(
+                "Aux+Verb",
+                mp => mp.Add(
+                    new PatternUnit(P.Single().WithToken("es").WithPOS(PartOfSpeech.AUX)),
+                    new PatternUnit(P.Multiple().WithPOS(PartOfSpeech.NOUN, PartOfSpeech.PROPN, PartOfSpeech.ADJ, PartOfSpeech.VERB))
+            ));
+            nlp.Add(isApattern);
+
             Document doc = new Document(text,Language.Spanish);
             var docs = nlp.Process(new List<Document>() { doc });
 
@@ -115,7 +125,7 @@ namespace ProyectoIA.NER
         {
             var value = doc.Value;
             var tokens = doc.TokenizedValue(mergeEntities: true);
-            var entities = string.Join("\n", doc.SelectMany(span => span.GetCapturedTokens()).Select(e => $"\t {e.Value} [{e.POS}] "));
+            var entities = string.Join("\n", doc.SelectMany(span => span.GetCapturedTokens()).Select(e => $"\t{e.Value} [{string.Join("", e.EntityTypes.SelectMany(m => m.Type))}] [{e.POS}]"));
             return $"{entities}";//$"Texto:\n\t'{value}'\n\nTokens:\n\t'{tokens}'\n\nEntidades: \n{entities}";
         }
 

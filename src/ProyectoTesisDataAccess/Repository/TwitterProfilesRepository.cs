@@ -37,8 +37,14 @@ namespace ProyectoTesisDataAccess.Repository
             var ID = Int64.Parse(id);//jsonDoc.GetValue("id");
             var filter = Builders<BsonDocument>.Filter.Eq("id", ID);
 
-            var document = collectionProfiles.Find(filter).FirstOrDefault() ?? collectionBase.Find(filter).FirstOrDefault();
-            Tweet tweet = (document != null)? BsonSerializer.Deserialize<Tweet>(document):null;
+            var document = collectionProfiles.Find(filter).FirstOrDefault() ?? collectionBase.Find(filter).FirstOrDefault(); //inReplyToStatusId -> retweetedStatus
+            Tweet tweet = (document != null) ? BsonSerializer.Deserialize<Tweet>(document) : null;
+            if(tweet.retweetedStatus == null && tweet.inReplyToStatusId > 0)
+            {
+                var replyStatus = collectionProfiles.Find(filter).FirstOrDefault() ?? collectionBase.Find(Builders<BsonDocument>.Filter.Eq("id", tweet.inReplyToStatusId)).FirstOrDefault();
+                Tweet tweetReply = (replyStatus != null) ? BsonSerializer.Deserialize<Tweet>(replyStatus) : null;
+                tweet.retweetedStatus = tweetReply;
+            }
             return tweet;
         }
 
@@ -48,8 +54,8 @@ namespace ProyectoTesisDataAccess.Repository
             var userID = Int64.Parse(id);
             var filter = builder.Eq("user.id", userID);
             var document = collectionProfiles.Find(filter).FirstOrDefault() ?? collectionBase.Find(filter).FirstOrDefault();
-            
-            Tweet tweet = (document != null)? BsonSerializer.Deserialize<Tweet>(document):null;
+
+            Tweet tweet = (document != null) ? BsonSerializer.Deserialize<Tweet>(document) : null;
             return tweet?.user;
         }
 
@@ -111,8 +117,10 @@ namespace ProyectoTesisDataAccess.Repository
                     var filter = Builders<BsonDocument>.Filter.Eq("id", jsonDoc.GetValue("id"));
                     var document = (name == "Tweets_Profiles") ? collectionProfiles.Find(filter).FirstOrDefault() : collectionBase.Find(filter).FirstOrDefault();
                     if (document == null)
+                    {
                         if (name == "Tweets_Profiles") collectionProfiles.InsertOne(jsonDoc);
                         else collectionBase.InsertOne(jsonDoc);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -128,8 +136,8 @@ namespace ProyectoTesisDataAccess.Repository
             if (dataContext.CollectionExists(collectionBaseCleanName)) dataContext.DropCollection(collectionBaseCleanName);
             string map = @"
                 function() {
-                    var idTw = Number(this.id);
-                    var idUser = Number(this.user.id);
+                    var idTw = this.id;
+                    var idUser = this.user.id;
                     emit({idTweet:idTw, idUser:idUser}, this.text);
                 }";
             /*

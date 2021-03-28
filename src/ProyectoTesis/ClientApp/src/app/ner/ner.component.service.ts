@@ -20,6 +20,12 @@ export class NerService extends BaseService {
   //State of the transaction word cloud
   loadingWordCloudSubjectBase$ = new BehaviorSubject<boolean>(true);
 
+  //Result of the transaction
+  resutlTrain$: BehaviorSubject<any> = new BehaviorSubject([]);
+  //State of the transaction
+  loadingTrainSubject$ = new BehaviorSubject<boolean>(false);
+
+
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     super(http, baseUrl);
   }
@@ -27,10 +33,20 @@ export class NerService extends BaseService {
   getText(): any {
     this.loadingSubject$.next(true);
     let params = new HttpParams();
-    params = params.append('limit', "1000");
-    this.http.get<String[]>(this.baseUrl + 'DataSet/api/getNER', { params }).subscribe(result => {
+    params = params.append('limit', "10");
+    this.http.get<String[]>(this.baseUrl + 'DataSet/api/getTestResultNER', { params }).subscribe(result => {
       this.payload$.next(result);
       this.loadingSubject$.next(false);
+    }, error => console.error(error));
+  }
+
+  getTrain(): any {
+    this.loadingTrainSubject$.next(true);
+    let params = new HttpParams();
+    params = params.append('limit', "1000000");
+    this.http.get<String[]>(this.baseUrl + 'DataSet/api/getNER', { params }).subscribe(result => {
+      this.resutlTrain$.next(result);
+      this.loadingTrainSubject$.next(false);
     }, error => console.error(error));
   }
 

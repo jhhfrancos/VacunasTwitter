@@ -84,7 +84,7 @@
 
                                 <div class="col-md-12 complete-box">
                                     <div class="row">
-                                        <h3 class="col-md-12">Usuario<span *ngIf="!user"> - No encontrado</span></h3>
+                                        <h3 class="col-md-12">Usuario<span *ngIf="!user"> - No encontrado</span> <span *ngIf="user"> - {{user?.screenName}}</span></h3>
                                         <div class="col-md-5">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Creado" value="{{user?.createdAt}}"
@@ -166,10 +166,14 @@
                                                 </thead>
                                                 <tbody>
                                                     <mat-spinner diameter="20" *ngIf="!(loadingTweetUser$ | async)" ></mat-spinner>
-                                                    <tr *ngFor="let item of ners; index as i">
+                                                    <tr>
+                                                        <td>{{ ners?.text }}</td>
+                                                        <td [innerHTML]="reeplaceNewLineStrings(ners?.tokens[0])"></td>
+                                                    </tr>
+                                                    <!-- <tr *ngFor="let item of ners; index as i">
                                                         <td>{{ item?.text }}</td>
                                                         <td [innerHTML]="reeplaceNewLineStrings(item?.tokens[0])"></td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>

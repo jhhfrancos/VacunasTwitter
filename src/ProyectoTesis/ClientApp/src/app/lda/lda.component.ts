@@ -20,22 +20,12 @@ export class LdaComponent implements OnInit {
   loading$ = this.ldaService.loadingSubject$.asObservable();
   loadingLdaTree$ = this.ldaService.loadingLdaSubject$.asObservable();
   loadingTrainningLda$ = this.ldaService.loadingTrainnginLdaSubject$.asObservable();
-  //public dataTreeSubject = new BehaviorSubject<HierarchyDatum>({ name: "" });
-  // public ldaTree : HierarchyDatum = 
-  //     {
-  //       name: "mito",
-  //       _id : "79asd",
-  //       children: [
-  //         { name: "europa", _id: "17010" },
-  //         { name: "riqueza", _id: "5842" },
-  //         { name: "hacefríoctm", _id: "1041" },
-  //         { name: "sostenible", _id: "5176" }
-  //       ]
-  //     };
+  
   public ldaTree = {} as HierarchyDatum;
   private ldaTreeCopy : HierarchyDatum;
   public ldas: String[];
   public ldaTrainning: boolean;
+  public text : string;
 
   constructor(private ldaService: LdaService) { }
 
@@ -71,7 +61,9 @@ export class LdaComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
+  inputChange(event){
+    this.ldaService.getTestLDA(event.target.value);
+  }
   TrainningLDA(): void {
     this.ldaService.getTraingLDA("1000000");
   }
@@ -109,47 +101,7 @@ export class LdaComponent implements OnInit {
     this.ldaTreeCopy = JSON.parse(JSON.stringify(this.ldaTree));
     this.searchNode(item.data._id, this.ldaTreeCopy);
     this.ldaService.getTestLDA(item.data.name);
-    /*var nodeFind = this.winNode;
-    nodeFind.children = [
-      {
-        "name": "países",
-        "children": [
-          {
-            "name": "turismo",
-          },
-          {
-            "name": "vacunación",
-            "children": [
-              { "name": "aborto", "value": 3534 },
-              { "name": "dinero", "value": 5731 },
-              { "name": "trabajadores", "value": 7840 },
-              { "name": "justicia", "value": 5914 }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "mito",
-        "children": [
-          { "name": "europa", "value": 17010 },
-          { "name": "riqueza", "value": 5842 },
-          { "name": "hacefríoctm", "value": 1041 },
-          { "name": "sostenible", "value": 5176 }
-        ]
-      }];*/
-//    this.ldaTree = this.ldaTreeCopy;
-    /*this.ldaTree = {
-      name: "vacunación",
-      _id: "3214",
-      children: [
-        { name: "aborto", _id: "321" },
-        { name: "dinero", _id: "5731" },
-        { name: "trabajadores", _id: "7840" },
-        { name: "justicia", _id: "5914" }
-      ]
-    };*/
-    console.log("click " + item);
-
+    
   }
 
   public winNode: HierarchyDatum = null;
