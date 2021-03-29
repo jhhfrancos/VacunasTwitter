@@ -11,7 +11,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/tablero', title: 'Tablero',  icon: 'dashboard', class: '' },
     { path: '/ner', title: 'Reconocimiento de entidades nombradas (NER)',  icon:'person', class: '' },
     { path: '/lda', title: 'Asignación de Dirichlet latente (LDA)',  icon:'group_work', class: '' },
-    { path: '/results', title: 'Results',  icon:'analytics', class: '' },
+    { path: '/results', title: 'Resultados',  icon:'analytics', class: '' },
     // { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
     // { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
     // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },

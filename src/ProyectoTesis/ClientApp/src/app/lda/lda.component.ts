@@ -55,13 +55,14 @@ export class LdaComponent implements OnInit {
       }));
 
     this.ldaService.getTestResultLDA("7");
-    this.ldaService.getTestLDA("covid sarampion vacunas molestia mundo");
+    this.ldaService.getTestLDA("covid");
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
   inputChange(event){
+    this.ldaTreeCopy = null;
     this.ldaService.getTestLDA(event.target.value);
   }
   TrainningLDA(): void {

@@ -81,7 +81,7 @@ export class ResultsComponent implements OnInit {
   }
 
   reeplaceNewLineStrings(text: string): string {
-    return text.replace(/\n/gi, "<br>") || "";
+    return text?.replace(/\n/gi, "<br>") || "";
   }
 
 }
