@@ -63,9 +63,9 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/getNER")]
         [HttpGet]
-        public bool GetNER(int limit)
+        public async Task<bool> GetNERAsync(int limit)
         {
-            var result = bussiness.NERTrainTweets(limit);
+            var result = await bussiness.NERTrainTweetsAsync(limit);
             return result;
         }
 

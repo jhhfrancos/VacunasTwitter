@@ -87,12 +87,12 @@ namespace ProyectoTesisBussiness.BussinessControllers
             return result;
         }
 
-        public bool NERTrainTweets(int limit)
+        public async Task<bool> NERTrainTweetsAsync(int limit)
         {
             var tweet = GetCleanTweets(limit);
             var train = tweet.Select(t => t.value.texto).ToList();
-            var result = machinneLearnning.NER(train);
-            return result;
+            var result = machinneLearnning.NERAsync(train);
+            return await result;
 
         }
 

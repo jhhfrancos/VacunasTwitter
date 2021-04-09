@@ -48,9 +48,9 @@ namespace ProyectoTesisBussiness.ML
                 .Take((texto.Count * 80) / 100);
         }
 
-        public bool NER(List<string> texto)
+        public async System.Threading.Tasks.Task<bool> NERAsync(List<string> texto)
         {
-            _ = NERClass.Trainning(texto);
+            _ = await NERClass.Trainning(texto);
             return true;
         }
 

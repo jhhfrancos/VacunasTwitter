@@ -41,10 +41,22 @@ namespace ProyectoIA.NER
             //Create a new pipeline for the english language, and add the WikiNER model to it
             Console.WriteLine("Loading models... This might take a bit longer the first time you run this sample, as the models have to be downloaded from the online repository");
             var nlp = await Pipeline.ForAsync(Language.Spanish);
+
+            var pos = await AveragePerceptronTagger.FromStoreAsync(Language.Spanish, -1, "");
+
+            Parallel.ForEach(training, doc => pos.Predict(doc));
+
+            var aper = new AveragePerceptronEntityRecognizer(language: Language.Spanish, version: Version.Latest, tag: "WikiNER", new string[] { "Person", "Organization", "Location" }, ignoreCase: false);
+
+            aper.Train(training);
+
+            await aper.StoreAsync();
+
             nlp.Add(await AveragePerceptronEntityRecognizer.FromStoreAsync(language: Language.Spanish, version: Version.Latest, tag: "WikiNER"));
 
             //Another available model for NER is the PatternSpotter, which is the conceptual equivalent of a RegEx on raw text, but operating on the tokenized form off the text.
             //Adds a custom pattern spotter for the pattern: single("is" / VERB) + multiple(NOUN/AUX/PROPN/AUX/DET/ADJ)
+
             var isApattern = new PatternSpotter(Language.Spanish, 0, tag: "is-a-pattern", captureTag: "IsA");
             isApattern.NewPattern(
                 "Aux+Verb",
@@ -125,7 +137,7 @@ namespace ProyectoIA.NER
         {
             var value = doc.Value;
             var tokens = doc.TokenizedValue(mergeEntities: true);
-            var entities = string.Join("\n", doc.SelectMany(span => span.GetCapturedTokens()).Select(e => $"\t{e.Value} [{string.Join("", e.EntityTypes.SelectMany(m => m.Type))}] [{e.POS}]"));
+            var entities = string.Join("\n", doc.SelectMany(span => span.GetCapturedTokens()).Where(e => e.Value.Length > 2).Select(e => $"\t{e.Value} [{string.Join("", e.EntityTypes.SelectMany(m => m.Type))}] [{e.POS}]"));
             return $"{entities}";//$"Texto:\n\t'{value}'\n\nTokens:\n\t'{tokens}'\n\nEntidades: \n{entities}";
         }
 
