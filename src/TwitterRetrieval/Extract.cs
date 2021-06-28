@@ -94,11 +94,11 @@ namespace TwitterRetrieval
                     RedirectStandardOutput = false,
                     RedirectStandardError = false,
                     UseShellExecute = true,
-                    CreateNoWindow = true                    
+                    CreateNoWindow = true
                 },
                 EnableRaisingEvents = true
             };
-            
+
             process.Exited += (sender, args) =>
             {
                 //var outline = process.StandardOutput.ReadToEnd();
@@ -126,23 +126,22 @@ namespace TwitterRetrieval
             try
             {
                 process.Start();
-                
+                double timeExcec = 0;
+                do
+                {
+                    Console.WriteLine("Process running? " + process.Responding);
+                    timeExcec = (DateTime.Now - process.StartTime).TotalMinutes;
+
+                } while (timeExcec <= 5); // Correr por 5 minutos
+                process.Kill();
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                //logger.LogError(e, "Command {} failed", cmd);
-                //source.SetException(e);
+                return true;
             }
-            double timeExcec = 0;
-            do
-            {
-                Console.WriteLine("Process running? " + process.Responding);
-                timeExcec = (DateTime.Now - process.StartTime).TotalMinutes;
-
-            } while (timeExcec <= 10); // Correr por 10 minutos
-            process.Kill();
-            return true;
+            
         }
     }
 }

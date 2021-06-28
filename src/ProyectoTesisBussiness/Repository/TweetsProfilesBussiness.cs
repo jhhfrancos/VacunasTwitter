@@ -6,7 +6,9 @@ using ProyectoTesisModels.Modelos;
 using ProyectoTesisModels.Modelos.ForceDirectedGraph;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TwitterRetrieval;
@@ -130,7 +132,10 @@ namespace ProyectoTesisBussiness.BussinessControllers
 
         public bool ExecuteBash()
         {
-            var result = $" ./twitter4j/auto-search.sh".ExecuteBash();
+            var path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var fullPath = Path.GetFullPath(@".//twitter4j//auto-search.sh");
+            //var result = @"D:\Maestria\Tesis\Vacunas\TwitterVacunas\VacunasTwitter\src\ProyectoTesis\twitter4j\auto-search.sh".ExecuteBash();
+            var result = fullPath.ExecuteBash();
             return result;
         }
 
