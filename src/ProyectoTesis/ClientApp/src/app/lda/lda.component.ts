@@ -65,7 +65,7 @@ export class LdaComponent implements OnInit {
 
     this.ldaService.getTestResultLDA("7");
     this.ldaService.getTestLDA("covid");
-    this.CreateTSNE(100, 2);
+    this.CreateTSNE(300, 2);
   }
 
   CreateTSNE(numberDocs, perplexity): void {
