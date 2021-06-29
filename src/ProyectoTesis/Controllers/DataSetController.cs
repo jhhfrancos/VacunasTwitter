@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using ProyectoTesisBussiness.BussinessControllers;
 using ProyectoTesisBussiness.MongoBussiness;
 using ProyectoTesisModels.Modelos;
 using ProyectoTesisModels.Modelos.ForceDirectedGraph;
+using static Catalyst.Models.LDA;
 
 namespace ProyectoTesis.Controllers
 {
@@ -93,6 +95,15 @@ namespace ProyectoTesis.Controllers
             return result;
         }
 
+        [Route("api/getTweetLDAModel")]
+        [HttpGet]
+        public IEnumerable<TopicModel> GetTweetLDAModel(int limit)
+        {
+            var result = bussiness.GetTweetLDAModel(limit);
+            var texto = JsonSerializer.Serialize(result);
+            return result;
+        }
+
         [Route("api/updateDB")]
         [HttpGet]
         public bool UpdateDB(int limit)
@@ -151,6 +162,20 @@ namespace ProyectoTesis.Controllers
         public Statistics DBStatistics()
         {
             return mongoServices.DBStatistics();
+        }
+
+        [Route("api/tsne")]
+        [HttpGet]
+        public TSNEResponse Tsnegraphics()
+        {
+            return bussiness.Tsnegraphics();
+        }
+
+        [Route("api/getalltopics")]
+        [HttpGet]
+        public List<LDATopicDescription> GetAllTopics()
+        {
+            return bussiness.GetAllTopics();
         }
     }
 }

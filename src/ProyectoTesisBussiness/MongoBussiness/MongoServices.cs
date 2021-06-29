@@ -50,5 +50,6 @@ namespace ProyectoTesisBussiness.MongoBussiness
         {
             return repository.GetUser(id);
         }
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using ProyectoTesisBussiness.ML;
+﻿using ProyectoTesisBussiness.ML;
 using ProyectoTesisDataAccess.Context;
 using ProyectoTesisDataAccess.Repository;
 using ProyectoTesisModels.Modelos;
@@ -75,12 +74,18 @@ namespace ProyectoTesisBussiness.BussinessControllers
             foreach (var item in result.Item1)
             {
                 var tokens = machinneLearnning.Tokens(item);
-                //var vec = machinneLearnning.WordToVec(new List<string>() { item });
+                //var vec = machinneLearnning.FrequencyWords(new List<string>() { item });
                 var dictionary = new TableTopics(item, result.Item2.ElementAt(index), tokens.ToArray());
                 returnValue.Add(dictionary);
                 index++;
             }
             return returnValue;
+        }
+        public IEnumerable<TopicModel> GetTweetLDAModel(int limit)
+        {
+            var tweets = GetCleanTweets(limit, "Tweets_Base_clean");
+            var result = machinneLearnning.TestingModel(tweets.Select(t => t.value.texto).ToList());
+            return result;
         }
 
         public TableTopics GetTweetNER(string text)
@@ -111,7 +116,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
             var tweet = GetCleanTweets(limit, db);
             var train = tweet.Select(t => t.value.textoStop).ToList();
             List<TableTopics> returnValue = new List<TableTopics>();
-            var vec = machinneLearnning.WordToVec(train);
+            var vec = machinneLearnning.FrequencyWords(train);
             return vec;
         }
 
@@ -128,6 +133,17 @@ namespace ProyectoTesisBussiness.BussinessControllers
 
             Graph grafo = new Graph() { links = links, nodes = nodes };
             return grafo;
+        }
+
+        public TSNEResponse Tsnegraphics()
+        {
+            machinneLearnning.WordToVec();
+            return null;
+        }
+
+        public List<Catalyst.Models.LDA.LDATopicDescription> GetAllTopics()
+        {
+            return machinneLearnning.GetAllTopics();
         }
 
         public bool ExecuteBash()

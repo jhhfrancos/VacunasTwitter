@@ -35,12 +35,13 @@ namespace ProyectoIA.Word2Vec
             var ft = new FastText(Language.Spanish, 0, "wiki-word2vec");
             ft.Data.Type = FastText.ModelType.CBow;
             ft.Data.Loss = FastText.LossType.NegativeSampling;
+            
             //ft.Data.ContextWindow = 2;
             ft.Data.IgnoreCase = true;
             ft.Train(nlp.Process(training));
             var vectors = ft.GetVectors();
             //await ft.StoreAsync();
-
+            
             return vectors;
         }
 

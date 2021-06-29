@@ -8,6 +8,8 @@ using Catalyst.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Mosaik.Core;
+using ProyectoTesisModels;
+using ProyectoTesisModels.Modelos;
 using static Catalyst.Models.LDA;
 
 namespace ProyectoIA
@@ -53,11 +55,9 @@ namespace ProyectoIA
             {
                 foreach (var doc in testDocs)
                 {
-
                     if (lda.TryPredict(doc, out var topics))
                     {
                         var docTopics = string.Join("\n", topics.Select(t => lda.TryDescribeTopic(t.TopicID, out var td) ? $"\n [{t.Score:n3}] => {td.ToString()}" : ""));
-
                         lda.TryDescribeTopic(40, out var salida);
 
                         Console.WriteLine("------------------------------------------");
@@ -70,8 +70,50 @@ namespace ProyectoIA
                     }
                 }
             }
-            var topicos2 = GetTopics();
+            //var topicos2 = GetTopics();
             return (values, topicos);
+        }
+
+        public async Task<List<TopicModel>> TestingModel(List<string> stringArray)
+        {
+            //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/
+            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
+            List<Document> testing = stringArray.Select(i => new Document(i,Language.Spanish)).ToList();
+            
+            var nlp = Pipeline.For(Language.Spanish);
+            var testDocs = nlp.Process(testing).ToArray();
+
+            List<TopicModel> topicsModel = new List<TopicModel>();
+
+            using (var lda = await LDA.FromStoreAsync(Language.Spanish, 0, "vacunas-lda"))
+            {
+                foreach (var doc in testDocs)
+                {
+                    var topicModel = new TopicModel()
+                    {
+                        Document = doc.Value,
+                        TopicDescriptions = new List<TopicModelDescription>()
+                    };
+                    if (lda.TryPredict(doc, out var topics))
+                    {
+                        foreach (var topicModelPredicted in topics)
+                        {
+                            if (lda.TryDescribeTopic(topicModelPredicted.TopicID, out var td))
+                            {
+                                topicModel.TopicDescriptions.Add(
+                                    new TopicModelDescription()
+                                    {
+                                        Score = topicModelPredicted.Score,
+                                        Tokens = (Dictionary<string, float>)td.Tokens,
+                                        TopicID = td.TopicID
+                                    });
+                            }
+                        }
+                    }
+                    topicsModel.Add(topicModel);
+                }
+            }
+            return topicsModel;
         }
 
         public async Task<List<LDATopicDescription>> GetTopics()

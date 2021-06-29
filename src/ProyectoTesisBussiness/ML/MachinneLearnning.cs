@@ -32,13 +32,18 @@ namespace ProyectoTesisBussiness.ML
             return LDAClass.Testing(testingSet).Result;
         }
 
+        public List<TopicModel> TestingModel(List<string> stringArray)
+        {
+            return LDAClass.TestingModel(stringArray).Result;
+        }
+
         public string[] Tokens(string texto)
         {
             var listTokens = LDAClass.Tokens(texto);
             return listTokens?.Select(t => t.ToString())?.ToArray();
         }
 
-        public IEnumerable<FrequencyWord> WordToVec(List<string> texto)
+        public IEnumerable<FrequencyWord> FrequencyWords(List<string> texto)
         {
             var vec = word2Vec.Trainning(texto).Result;
             return vec.GroupBy(t => stemming.Execute(t.Token), StringComparer.OrdinalIgnoreCase)
@@ -46,6 +51,13 @@ namespace ProyectoTesisBussiness.ML
                 .Where(t => t.word != "</s>" && t.word.Length > 2)
                 .Skip((texto.Count * 10) / 100)
                 .Take((texto.Count * 80) / 100);
+        }
+
+        public void WordToVec()
+        {
+            var textos = new List<string>() { "buenas tardes a todos","como estan","me encuentro muy bien debo tranformar esto","debo transformar este texto tambien" };
+            var vec = word2Vec.Trainning(textos).Result;
+            int i = 0;
         }
 
         public async System.Threading.Tasks.Task<bool> NERAsync(List<string> texto)
@@ -61,7 +73,7 @@ namespace ProyectoTesisBussiness.ML
         }
         public (List<string>, List<string>) LDATest(string text)
         {
-            return LDAClass.Testing(new List<string>() { text }).Result; ;
+            return LDAClass.Testing(new List<string>() { text }).Result;
         }
 
 
@@ -70,5 +82,10 @@ namespace ProyectoTesisBussiness.ML
             var result = textClasification.Entrenamiento(trainSet).Result;
             return result;
         }
+
+        public List<Catalyst.Models.LDA.LDATopicDescription> GetAllTopics(){
+            return LDAClass.GetTopics().Result;
+        }
+
     }
 }
