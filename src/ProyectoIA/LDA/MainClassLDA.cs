@@ -116,6 +116,16 @@ namespace ProyectoIA
             return topicsModel;
         }
 
+        public async Task<int> getNumberOfTopics()
+        {
+            Storage.Current = new OnlineRepositoryStorage(new DiskStorage("catalyst-models-LDA"));
+
+            using (var lda = await LDA.FromStoreAsync(Language.Spanish, 0, "vacunas-lda"))
+            {
+                return lda.Data.NumberOfTopics; ;
+            }
+        }
+
         public async Task<List<LDATopicDescription>> GetTopics()
         {
             //Configures the model storage to use the online repository backed by the local folder ./catalyst-models/

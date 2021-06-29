@@ -19,13 +19,17 @@ export class LdaComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   loading$ = this.ldaService.loadingSubject$.asObservable();
   loadingLdaTree$ = this.ldaService.loadingLdaSubject$.asObservable();
+  loadingLdaTSNE$ = this.ldaService.loadingTsneLdaSubject$.asObservable();
   loadingTrainningLda$ = this.ldaService.loadingTrainnginLdaSubject$.asObservable();
-  
+
   public ldaTree = {} as HierarchyDatum;
-  private ldaTreeCopy : HierarchyDatum;
+  private ldaTreeCopy: HierarchyDatum;
+  public ldaTSNE: any;
   public ldas: String[];
   public ldaTrainning: boolean;
-  public text : string;
+  public text: string;
+  public perplejidad: number;
+  public numDocs: number;
 
   constructor(private ldaService: LdaService) { }
 
@@ -40,7 +44,7 @@ export class LdaComponent implements OnInit {
         //this.ldaTree = result;
         if (!this.ldaTreeCopy)
           this.ldaTree = this.createHierarchicalDatum(result);
-        else{
+        else {
           var newNode = this.createHierarchicalDatum(result);
           this.winNode.name = newNode.name;
           this.winNode.children = newNode.children;
@@ -54,14 +58,24 @@ export class LdaComponent implements OnInit {
         this.ldaTrainning = result;
       }));
 
+    this.subscriptions.push(this.ldaService.tsneLdaSubject$
+      .subscribe(result => {
+        this.ldaTSNE = result;
+      }));
+
     this.ldaService.getTestResultLDA("7");
     this.ldaService.getTestLDA("covid");
+    this.CreateTSNE(100, 2);
+  }
+
+  CreateTSNE(numberDocs, perplexity): void {
+    this.ldaService.getTsneLDA(numberDocs, perplexity);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-  inputChange(event){
+  inputChange(event) {
     this.ldaTreeCopy = null;
     this.ldaService.getTestLDA(event.target.value);
   }
@@ -102,7 +116,7 @@ export class LdaComponent implements OnInit {
     this.ldaTreeCopy = JSON.parse(JSON.stringify(this.ldaTree));
     this.searchNode(item.data._id, this.ldaTreeCopy);
     this.ldaService.getTestLDA(item.data.name);
-    
+
   }
 
   public winNode: HierarchyDatum = null;

@@ -3,6 +3,7 @@ using ProyectoIA;
 using ProyectoIA.NER;
 using ProyectoIA.SpanishStemmer;
 using ProyectoIA.TextClasification;
+using ProyectoIA.TSNEproject;
 using ProyectoIA.Word2Vec;
 using ProyectoTesisModels.Modelos;
 using System;
@@ -17,13 +18,14 @@ namespace ProyectoTesisBussiness.ML
         MainClassLDA LDAClass = new MainClassLDA();
         MainClassNER NERClass = new MainClassNER();
         MainWord2Vec word2Vec = new MainWord2Vec();
+        MainTSNE tsne = new MainTSNE();
         MainTextClasification textClasification = new MainTextClasification();
         Stemmer stemming = new Stemmer();
 
         public bool LDATrainAsync(List<string> trainSet, int numTopics, int NumOfTerms)
         {
             var trainReady = LDAClass.Training(trainSet, numTopics, NumOfTerms).Result;
-            
+
             return trainReady;
         }
 
@@ -55,9 +57,14 @@ namespace ProyectoTesisBussiness.ML
 
         public void WordToVec()
         {
-            var textos = new List<string>() { "buenas tardes a todos","como estan","me encuentro muy bien debo tranformar esto","debo transformar este texto tambien" };
+            var textos = new List<string>() { "buenas tardes a todos", "como estan", "me encuentro muy bien debo tranformar esto", "debo transformar este texto tambien" };
             var vec = word2Vec.Trainning(textos).Result;
             int i = 0;
+        }
+
+        public TSNEResponse CreateTSNEModel(double[][] inputs, int[] targets, int perplexity)
+        {
+            return tsne.CreateTSNEModel(inputs, targets, perplexity);
         }
 
         public async System.Threading.Tasks.Task<bool> NERAsync(List<string> texto)
@@ -83,8 +90,14 @@ namespace ProyectoTesisBussiness.ML
             return result;
         }
 
-        public List<Catalyst.Models.LDA.LDATopicDescription> GetAllTopics(){
+        public List<Catalyst.Models.LDA.LDATopicDescription> GetAllTopics()
+        {
             return LDAClass.GetTopics().Result;
+        }
+
+        public int getNumberOfTopics()
+        {
+            return LDAClass.getNumberOfTopics().Result;
         }
 
     }

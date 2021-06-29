@@ -1,0 +1,10 @@
+div.tooltipTSNE {	
+    background: rgb(37, 38, 39);	
+    color: white;
+}
+
+.d3-chart {
+    width: 100%;
+    min-height:600px;
+    border: 1px solid gray;
+  }

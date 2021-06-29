@@ -29,6 +29,11 @@ export class LdaService extends BaseService {
   //Result trainning LDA
   trainnginLdaSubject$: BehaviorSubject<any> = new BehaviorSubject([]);
 
+  //Result of the transaction
+  loadingTsneLdaSubject$ = new BehaviorSubject<boolean>(false);
+  //Result TSNE LDA
+  tsneLdaSubject$: BehaviorSubject<any> = new BehaviorSubject([]);
+
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     super(http, baseUrl);
   }
@@ -62,6 +67,17 @@ export class LdaService extends BaseService {
     this.http.get<String[]>(this.baseUrl + 'DataSet/api/getTrainLDA', { params }).subscribe(result => {
       this.trainnginLdaSubject$.next(result);
       this.loadingTrainnginLdaSubject$.next(false);
+    }, error => console.error(error));
+  }
+
+  getTsneLDA(limit: number, perplexity: number): any {
+    this.loadingTsneLdaSubject$.next(true);
+    let params = new HttpParams();
+    params = params.append('limit', limit.toString());
+    params = params.append('perplexity', perplexity.toString());
+    this.http.get<String[]>(this.baseUrl + 'DataSet/api/tsne', { params }).subscribe(result => {
+      this.tsneLdaSubject$.next(result);
+      this.loadingTsneLdaSubject$.next(false);
     }, error => console.error(error));
   }
 

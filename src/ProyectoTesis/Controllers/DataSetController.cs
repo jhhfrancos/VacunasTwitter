@@ -166,9 +166,9 @@ namespace ProyectoTesis.Controllers
 
         [Route("api/tsne")]
         [HttpGet]
-        public TSNEResponse Tsnegraphics()
+        public TSNEResponse Tsnegraphics(int limit, int perplexity)
         {
-            return bussiness.Tsnegraphics();
+            return bussiness.Tsnegraphics(limit, perplexity);
         }
 
         [Route("api/getalltopics")]

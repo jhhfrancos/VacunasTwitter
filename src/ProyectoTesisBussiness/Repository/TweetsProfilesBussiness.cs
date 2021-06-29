@@ -44,7 +44,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
             var tweet = GetCleanTweets(limit);
             //var train = GetTweets(2000).Select(t => t.text).ToList();
             var train = tweet.Select(t => t.value.textoStop).ToList();
-            var result = machinneLearnning.LDATrainAsync(train,numTopics,NumOfTerms);
+            var result = machinneLearnning.LDATrainAsync(train, numTopics, NumOfTerms);
             return result;
         }
 
@@ -84,7 +84,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
         public IEnumerable<TopicModel> GetTweetLDAModel(int limit)
         {
             var tweets = GetCleanTweets(limit, "Tweets_Base_clean");
-            var result = machinneLearnning.TestingModel(tweets.Select(t => t.value.texto).ToList());
+            var result = machinneLearnning.TestingModel(tweets.Select(t => t.value.textoStop).ToList());
             return result;
         }
 
@@ -106,10 +106,10 @@ namespace ProyectoTesisBussiness.BussinessControllers
         public IEnumerable<TableTopics> NERTestResultTweets(int limit)
         {
             var tweets = GetCleanTweets(limit, "Tweets_Base_clean");
-            var test= tweets.Select(t => machinneLearnning.NERTest(t.value.texto));
+            var test = tweets.Select(t => machinneLearnning.NERTest(t.value.texto));
             return test.ToList();
-
         }
+
 
         public IEnumerable<FrequencyWord> WordCloud(int limit, string db)
         {
@@ -135,10 +135,26 @@ namespace ProyectoTesisBussiness.BussinessControllers
             return grafo;
         }
 
-        public TSNEResponse Tsnegraphics()
+        public TSNEResponse Tsnegraphics(int limit, int perplexity)
         {
-            machinneLearnning.WordToVec();
-            return null;
+            int numberOfTopics = machinneLearnning.getNumberOfTopics();
+            var documents = GetTweetLDAModel(limit);
+            var countDocuments = documents.Count();
+            double[][] inputsTSNE = new double[countDocuments][];
+            int[] targetsTSNE = new int[countDocuments];
+            //Fullfill with Zeros the input matrix
+            Array.Clear(inputsTSNE, 0, inputsTSNE.Length);
+            for (int i = 0; i < countDocuments; i++)
+            {
+                var document = documents.ElementAt(i);
+                var inputRow = inputsTSNE[i] = new double[numberOfTopics];
+                Array.Clear(inputsTSNE[i], 0, numberOfTopics);
+                document.TopicDescriptions.ForEach(item => inputRow[item.TopicID] = item.Score);
+                targetsTSNE[i] = document.TopicDescriptions.FirstOrDefault().TopicID;
+            }
+            var response = machinneLearnning.CreateTSNEModel(inputsTSNE, targetsTSNE, perplexity);
+            response.documents = documents.ToList();
+            return response;
         }
 
         public List<Catalyst.Models.LDA.LDATopicDescription> GetAllTopics()
