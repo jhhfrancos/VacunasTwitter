@@ -150,7 +150,7 @@ namespace ProyectoTesisBussiness.BussinessControllers
                 var inputRow = inputsTSNE[i] = new double[numberOfTopics];
                 Array.Clear(inputsTSNE[i], 0, numberOfTopics);
                 document.TopicDescriptions.ForEach(item => inputRow[item.TopicID] = item.Score);
-                targetsTSNE[i] = document.TopicDescriptions.FirstOrDefault().TopicID;
+                targetsTSNE[i] = (document.TopicDescriptions.Count() > 0)? document.TopicDescriptions.FirstOrDefault().TopicID : 0;
             }
             var response = machinneLearnning.CreateTSNEModel(inputsTSNE, targetsTSNE, perplexity);
             response.documents = documents.ToList();
